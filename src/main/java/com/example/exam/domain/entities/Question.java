@@ -1,6 +1,7 @@
 package com.example.exam.domain.entities;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -9,8 +10,12 @@ public class Question extends BaseEntity {
 
     private String question;
     private Set<Answer> answers;
-    private String correctAnswer;
+    private char correctAnswer;
     private String explaining;
+
+    public Question() {
+        answers = new LinkedHashSet<>();
+    }
 
     @Column(columnDefinition = "text")
     public String getQuestion() {
@@ -31,11 +36,11 @@ public class Question extends BaseEntity {
     }
 
     @Column(name = "correct_answer")
-    public String getCorrectAnswer() {
+    public char getCorrectAnswer() {
         return correctAnswer;
     }
 
-    public void setCorrectAnswer(String correctAnswer) {
+    public void setCorrectAnswer(char correctAnswer) {
         this.correctAnswer = correctAnswer;
     }
 
