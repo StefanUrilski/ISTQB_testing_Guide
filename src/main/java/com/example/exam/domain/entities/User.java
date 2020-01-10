@@ -1,6 +1,5 @@
 package com.example.exam.domain.entities;
 
-import org.apache.tomcat.jni.Address;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
