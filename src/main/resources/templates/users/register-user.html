@@ -1,0 +1,39 @@
+<th:block th:fragment>
+    <div class="m-5 p-5">
+        <h1 class="text-center text-dark">Register</h1>
+        <hr class="hr-2 bg-dark w-25">
+        <form class="form w-25 mx-auto" th:action="@{/users/register}" th:method="post" th:object="${model}">
+            <div class="form-group" th:classappend="${#fields.hasErrors('user')}  ? 'bg-danger'">
+                <label for="user" class="font-weight-bold">User</label>
+                <input type="user" class="form-control" id="user" placeholder="Username..." name="user"
+                       th:value="*{user}">
+                <small class="font-italic">*Can be very simplistic.</small>
+                <th:block th:if="${#fields.hasErrors('user')}  ? border-color: red">
+                    <small class="error" th:errors="*{user}"></small>
+                </th:block>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('password')}  ? 'bg-danger'">
+                <label for="password" class="font-weight-bold">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password..." name="password"
+                       th:value="*{password}">
+                <small class="font-italic">*Can be very simplistic.</small>
+                <th:block th:if="${#fields.hasErrors('password')}  ? border-color: red">
+                    <small class="error" th:errors="*{password}"></small>
+                </th:block>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('password')}  ? 'bg-danger'">
+                <label for="confirmPassword" class="font-weight-bold">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password..."
+                       name="confirmPassword" th:value="*{confirmPassword}">
+                <small class="font-italic">*Must be the same.</small>
+                <th:block th:if="${#fields.hasErrors('password')}  ? border-color: red">
+                    <small class="error" th:errors="*{password}"></small>
+                </th:block>
+            </div>
+            <hr class="hr-2 bg-dark">
+            <div class="button-holder d-flex justify-content-center">
+                <button type="submit" class="btn btn-dark">Register</button>
+            </div>
+        </form>
+    </div>
+</th:block>
