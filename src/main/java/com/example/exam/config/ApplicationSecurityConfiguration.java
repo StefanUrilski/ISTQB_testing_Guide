@@ -28,7 +28,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .and()
                 .formLogin()
                     .loginPage("/users/login")
-                    .usernameParameter("email")
+                    .usernameParameter("user")
                     .passwordParameter("password")
                     .defaultSuccessUrl("/")
                 .and()
