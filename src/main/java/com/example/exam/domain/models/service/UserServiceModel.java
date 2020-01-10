@@ -3,7 +3,7 @@ package com.example.exam.domain.models.service;
 public class UserServiceModel {
 
     private String id;
-    private String name;
+    private String userName;
     private String password;
 
     public String getId() {
@@ -14,12 +14,12 @@ public class UserServiceModel {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
