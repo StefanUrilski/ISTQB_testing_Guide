@@ -24,6 +24,8 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .and()
                 .authorizeRequests()
                     .antMatchers("/**").permitAll()
+                    .antMatchers("/static/css/**").permitAll()
+                    .antMatchers("/static/js/**").permitAll()
                     .anyRequest().permitAll()
                 .and()
                 .formLogin()
