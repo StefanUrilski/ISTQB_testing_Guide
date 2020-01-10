@@ -51,5 +51,9 @@ public class UserController extends BaseController {
         return redirect("/");
     }
 
+    @GetMapping("/login")
+    public ModelAndView login() {
+        return view("users/login-user");
+    }
 
 }
