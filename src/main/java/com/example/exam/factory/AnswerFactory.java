@@ -2,9 +2,9 @@ package com.example.exam.factory;
 
 import com.example.exam.domain.entities.Answer;
 
-import java.util.List;
+import java.util.Set;
 
 public interface AnswerFactory {
 
-    List<Answer> buildAnswer(String[] setOfAnswers);
+    Set<Answer> buildAnswer(String[] setOfAnswers);
 }

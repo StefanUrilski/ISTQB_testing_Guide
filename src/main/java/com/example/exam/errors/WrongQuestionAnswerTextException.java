@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.FAILED_DEPENDENCY, reason = "Wrong string input.")
-public class WrongAnswerTextException extends RuntimeException {
+public class WrongQuestionAnswerTextException extends RuntimeException {
 
-    public WrongAnswerTextException(String message) {
+    public WrongQuestionAnswerTextException(String message) {
         super(message);
     }
 }

@@ -11,7 +11,7 @@ public class Question extends BaseEntity {
     private String question;
     private Set<Answer> answers;
     private char correctAnswer;
-    private String explaining;
+    private String explanation;
 
     public Question() {
         answers = new LinkedHashSet<>();
@@ -45,11 +45,11 @@ public class Question extends BaseEntity {
     }
 
     @Column(columnDefinition = "text")
-    public String getExplaining() {
-        return explaining;
+    public String getExplanation() {
+        return explanation;
     }
 
-    public void setExplaining(String explaining) {
-        this.explaining = explaining;
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
     }
 }
