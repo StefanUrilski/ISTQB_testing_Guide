@@ -2,7 +2,7 @@
     <div class="jumbotron">
         <h1>It works!</h1>
 
-        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+        <th:block sec:authorize="hasRole('ROLE_ROOT')">
             <h2>Welcome Admin!</h2>
         </th:block>
         <th:block sec:authorize="hasRole('ROLE_USER')">
