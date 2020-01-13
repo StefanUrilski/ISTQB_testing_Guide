@@ -23,6 +23,7 @@ public class QuestionFactoryImpl implements QuestionFactory {
 
     @Override
     public Question buildQuestion(String conditionText) {
+        conditionText = conditionText.replace("\r\n", " ");
         String[] text = conditionText.split(QUESTION_ANSWER_DELIMITER);
 
         String[] qAndA = text[0].split("\\(");
