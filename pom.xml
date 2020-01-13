@@ -94,7 +94,6 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>com.github.jsimone</groupId>
                                     <artifactId>webapp-runner</artifactId>
                                     <destFileName>webapp-runner.jar</destFileName>
                                 </artifactItem>
