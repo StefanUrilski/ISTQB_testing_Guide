@@ -1,0 +1,23 @@
+<th:block>
+    <div class="jumbotron mt-4 ml-3 mr-3 min-height">
+
+        <th:block sec:authorize="hasRole('ROLE_ROOT')">
+            <h1 class="text-lg-center font-weight-bold" th:text="|Hello, ${#authentication.getName()}!|"></h1>
+        </th:block>
+        <th:block sec:authorize="hasRole('ROLE_USER') && !hasRole('ROLE_ROOT')">
+            <h1 class="text-lg-center font-weight-bold" th:text="|Welcome ${#authentication.getName()}!|"></h1>
+        </th:block>
+
+        <h3 class="pt-5">
+            This site is based on the book - Adam Roman - A Study Guide to the ISTQB&reg;
+            Foundation Level 2018 Syllabus 2018 Springer International Publishing 1.
+            <br/>
+            <br/>
+            It contains all questions, answers and explanation.
+            <br/>
+            <br/>
+            The application remembers witch random question you seen and give you, every time
+            a new set of questions each time when you pick a "random question" option.
+        </h3>
+    </div>
+</th:block>
