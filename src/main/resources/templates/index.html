@@ -2,7 +2,10 @@
     <div class="jumbotron">
         <h1>It works!</h1>
 
-        <th:block sec:authorize="isAuthenticated()">
+        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+            <h2>Welcome Admin!</h2>
+        </th:block>
+        <th:block sec:authorize="hasRole('ROLE_USER')">
             <h2>Welcome traveler!</h2>
         </th:block>
 
