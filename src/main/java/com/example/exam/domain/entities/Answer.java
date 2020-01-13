@@ -11,6 +11,14 @@ public class Answer extends BaseEntity {
     private char symbol;
     private String description;
 
+    public Answer() {
+    }
+
+    public Answer(char symbol, String description) {
+        this.symbol = symbol;
+        this.description = description;
+    }
+
     @Column
     public char getSymbol() {
         return symbol;

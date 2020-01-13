@@ -26,7 +26,7 @@ public class Question extends BaseEntity {
         this.question = question;
     }
 
-    @OneToMany(targetEntity = Answer.class, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Answer.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Set<Answer> getAnswers() {
         return answers;
     }
