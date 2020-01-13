@@ -8,8 +8,9 @@ import com.example.exam.util.FileReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.exam.common.Constants.QUESTION_ADDING_EXCEPTION;
 
@@ -36,15 +37,12 @@ public class QuestionServiceImpl implements QuestionService {
         String[] inputFileQuestions = fileReader.readFile(fileNameWithExtension)
                 .split(QUESTION_DELIMITER_REGEX);
 
-        List<Question> questions = new ArrayList<>();
+        List<Question> questions = Arrays.stream(inputFileQuestions)
+                .map(
+                        questionFactory::buildQuestion
+                )
+                .collect(Collectors.toList());
 
-        for (String questionWithAnswer : inputFileQuestions) {
-            Question question = questionFactory.buildQuestion(questionWithAnswer);
-
-            questions.add(question);
-        }
-
-        System.out.println();
         try {
             questionRepository.saveAll(questions);
         } catch (Exception e) {
