@@ -5,3 +5,11 @@
 hr.hr-2 {
     height: 2px;
 }
+
+.min-height {
+    min-height: 505px;
+}
+
+.navbar-nav button {
+    border-style: none !important;
+}
