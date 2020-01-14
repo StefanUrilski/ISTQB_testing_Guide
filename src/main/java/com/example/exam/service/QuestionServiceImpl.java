@@ -1,6 +1,7 @@
 package com.example.exam.service;
 
 import com.example.exam.domain.entities.Question;
+import com.example.exam.domain.models.service.QuestionInfoServiceModel;
 import com.example.exam.errors.QuestionSetFailureException;
 import com.example.exam.factory.QuestionFactory;
 import com.example.exam.repository.QuestionRepository;
@@ -30,6 +31,11 @@ public class QuestionServiceImpl implements QuestionService {
         this.questionRepository = questionRepository;
     }
 
+    private int calcPercentage(int allQuestions, int userVisitedQuestionCount) {
+        return (userVisitedQuestionCount / allQuestions) * 100;
+    }
+
+
     @Override
     public void saveTextFileDataToDB(String fileName) {
         String fileNameWithExtension = String.format("%s.txt", fileName);
@@ -49,4 +55,16 @@ public class QuestionServiceImpl implements QuestionService {
             throw new QuestionSetFailureException(QUESTION_ADDING_EXCEPTION);
         }
     }
+
+    @Override
+    public QuestionInfoServiceModel getQuestionsInfo(String username) {
+        int allQuestionSetsNumber = questionRepository.findAllQuestionSetsNumber();
+        int allQuestions = (int) questionRepository.count();
+        int userVisitedQuestionCount = questionRepository.findAllVisitedQuestionsForUser(username);
+
+        int percentage = calcPercentage(allQuestions, userVisitedQuestionCount);
+
+        return new QuestionInfoServiceModel(allQuestionSetsNumber, percentage);
+    }
+
 }
