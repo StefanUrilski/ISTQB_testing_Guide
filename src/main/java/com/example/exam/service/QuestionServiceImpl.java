@@ -29,8 +29,6 @@ public class QuestionServiceImpl implements QuestionService {
     private final String TEXT_FILES_FOLDER_PATH = String.format("%s\\src\\main\\resources\\static\\textFiles",
             System.getProperty("user.dir"));
 
-    private final String TEXT_FILES_FOLDER_PATH_TWO = "\\textFiles";
-
     private final FileReader fileReader;
     private final QuestionFactory questionFactory;
     private final QuestionRepository questionRepository;
@@ -57,10 +55,6 @@ public class QuestionServiceImpl implements QuestionService {
     private List<String> getExistedFilesNames() {
         File file = new File(TEXT_FILES_FOLDER_PATH);
         String[] fileList = file.list();
-
-        if (fileList == null) {
-            fileList = new File(TEXT_FILES_FOLDER_PATH_TWO).list();
-        }
 
         if (fileList == null) {
             return new ArrayList<>();
@@ -107,10 +101,12 @@ public class QuestionServiceImpl implements QuestionService {
 
         if (allQuestions == 0) return null;
 
-        int userVisitedQuestionCount = questionRepository.findAllVisitedQuestionsForUser(user.getId());
+        // heroku error
+//        int userVisitedQuestionCount = questionRepository.findAllVisitedQuestionsForUser(user.getId());
 
         int allQuestionSetsNumber = questionRepository.findAllQuestionSetsNumber();
-        int percentage = calcPercentage(allQuestions, userVisitedQuestionCount);
+//        int percentage = calcPercentage(allQuestions, userVisitedQuestionCount);
+        int percentage = 0;
 
         return new QuestionInfoServiceModel(allQuestionSetsNumber, percentage);
     }
