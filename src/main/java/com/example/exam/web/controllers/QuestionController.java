@@ -32,7 +32,7 @@ public class QuestionController extends BaseController {
     public ModelAndView questionsFilesStatus() {
         QuestionFilesViewModel questionFilesNames =
                 modelMapper.map(questionService.getFilesNames(), QuestionFilesViewModel.class);
-        return view("questions/all-questions", "filesNames", questionFilesNames);
+        return view("questions/status-questions", "filesNames", questionFilesNames);
     }
 
     @GetMapping("/all")

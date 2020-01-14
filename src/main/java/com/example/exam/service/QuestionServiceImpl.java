@@ -65,10 +65,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void saveTextFileDataToDB(String fileName) {
-        String fileNameWithExtension = String.format("%s.txt", fileName);
         String questionSet = fileName.substring(0,1);
 
-        String[] inputFileQuestions = fileReader.readFile(fileNameWithExtension)
+        String[] inputFileQuestions = fileReader.readFile(fileName)
                 .split(QUESTION_DELIMITER_REGEX);
 
         List<Question> questions = Arrays.stream(inputFileQuestions)
