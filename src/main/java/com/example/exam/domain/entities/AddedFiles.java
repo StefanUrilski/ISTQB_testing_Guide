@@ -10,6 +10,13 @@ public class AddedFiles extends BaseEntity {
 
     private String addedFileName;
 
+    public AddedFiles() {
+    }
+
+    public AddedFiles(String addedFileName) {
+        this.addedFileName = addedFileName;
+    }
+
     @Column(name = "added_file_name")
     public String getAddedFileName() {
         return addedFileName;
