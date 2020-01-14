@@ -59,7 +59,7 @@ public class QuestionServiceImpl implements QuestionService {
         String[] fileList = file.list();
 
         if (fileList == null) {
-            file = new File(TEXT_FILES_FOLDER_PATH_TWO);
+            fileList = new File(TEXT_FILES_FOLDER_PATH_TWO).list();
         }
 
         if (fileList == null) {
