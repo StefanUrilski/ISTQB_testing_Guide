@@ -1,6 +1,7 @@
 package com.example.exam.service;
 
-import com.example.exam.domain.models.service.QuestionInfoServiceModel;
+import com.example.exam.domain.models.service.question.QuestionInfoServiceModel;
+import com.example.exam.domain.models.service.question.QuestionFilesServiceModel;
 
 public interface QuestionService {
 
@@ -9,4 +10,6 @@ public interface QuestionService {
     void saveTextFileDataToDB(String fileName);
 
     QuestionInfoServiceModel getQuestionsInfo(String username);
+
+    QuestionFilesServiceModel getFilesNames();
 }

@@ -1,4 +1,4 @@
-package com.example.exam.domain.models.service;
+package com.example.exam.domain.models.service.question;
 
 public class QuestionInfoServiceModel {
 
