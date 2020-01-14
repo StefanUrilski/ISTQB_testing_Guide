@@ -2,6 +2,7 @@ package com.example.exam.service;
 
 import com.example.exam.domain.entities.Question;
 import com.example.exam.domain.models.service.QuestionInfoServiceModel;
+import com.example.exam.domain.models.service.UserServiceModel;
 import com.example.exam.errors.QuestionSetFailureException;
 import com.example.exam.factory.QuestionFactory;
 import com.example.exam.repository.QuestionRepository;
@@ -21,14 +22,17 @@ public class QuestionServiceImpl implements QuestionService {
     private final FileReader fileReader;
     private final QuestionFactory questionFactory;
     private final QuestionRepository questionRepository;
+    private final UserService userService;
 
     @Autowired
     public QuestionServiceImpl(FileReader fileReader,
                                QuestionFactory questionFactory,
-                               QuestionRepository questionRepository) {
+                               QuestionRepository questionRepository,
+                               UserService userService) {
         this.fileReader = fileReader;
         this.questionFactory = questionFactory;
         this.questionRepository = questionRepository;
+        this.userService = userService;
     }
 
     private int calcPercentage(int allQuestions, int userVisitedQuestionCount) {
@@ -62,10 +66,11 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionInfoServiceModel getQuestionsInfo(String username) {
-        int allQuestionSetsNumber = questionRepository.findAllQuestionSetsNumber();
+        UserServiceModel user = userService.getUserByName(username);
+        int userVisitedQuestionCount = questionRepository.findAllVisitedQuestionsForUser(user.getId());
         int allQuestions = (int) questionRepository.count();
-        int userVisitedQuestionCount = questionRepository.findAllVisitedQuestionsForUser(username);
 
+        int allQuestionSetsNumber = questionRepository.findAllQuestionSetsNumber();
         int percentage = calcPercentage(allQuestions, userVisitedQuestionCount);
 
         return new QuestionInfoServiceModel(allQuestionSetsNumber, percentage);

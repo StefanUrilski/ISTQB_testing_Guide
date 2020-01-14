@@ -7,7 +7,7 @@ public interface UserService extends UserDetailsService {
 
     void registerUser(UserServiceModel userServiceModel);
 
-    UserServiceModel getUserByName(String email);
+    UserServiceModel getUserByName(String name);
 
     UserServiceModel getUserById(String id);
 }
