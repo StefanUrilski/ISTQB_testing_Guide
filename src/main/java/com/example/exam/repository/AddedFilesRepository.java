@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AddedFilesRepository extends JpaRepository<AddedFiles, Long> {
 
+    AddedFiles findByAddedFileName(String addedFileName);
 }
