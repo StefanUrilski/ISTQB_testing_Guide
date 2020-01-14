@@ -1,5 +1,6 @@
 package com.example.exam.web.controllers;
 
+import com.example.exam.domain.models.service.question.QuestionInfoServiceModel;
 import com.example.exam.domain.models.view.question.QuestionInfoViewModel;
 import com.example.exam.domain.models.view.question.QuestionFilesViewModel;
 import com.example.exam.service.QuestionService;
@@ -47,8 +48,14 @@ public class QuestionController extends BaseController {
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_USER') && !hasRole('ROLE_ROOT')")
     public ModelAndView allQuestions(Principal principal) {
+        QuestionInfoServiceModel questionsInfo = questionService.getQuestionsInfo(principal.getName());
+
+        if (questionsInfo == null) {
+            return view("questions/all-questions", "questions", null);
+        }
+
         QuestionInfoViewModel questions = modelMapper
-                .map(questionService.getQuestionsInfo(principal.getName()), QuestionInfoViewModel.class);
+                .map(questionsInfo, QuestionInfoViewModel.class);
 
         return view("questions/all-questions", "questions", questions);
     }

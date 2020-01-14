@@ -97,8 +97,11 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public QuestionInfoServiceModel getQuestionsInfo(String username) {
         UserServiceModel user = userService.getUserByName(username);
-        int userVisitedQuestionCount = questionRepository.findAllVisitedQuestionsForUser(user.getId());
         int allQuestions = (int) questionRepository.count();
+
+        if (allQuestions == 0) return null;
+
+        int userVisitedQuestionCount = questionRepository.findAllVisitedQuestionsForUser(user.getId());
 
         int allQuestionSetsNumber = questionRepository.findAllQuestionSetsNumber();
         int percentage = calcPercentage(allQuestions, userVisitedQuestionCount);
