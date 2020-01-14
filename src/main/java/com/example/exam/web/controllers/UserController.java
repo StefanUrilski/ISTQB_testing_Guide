@@ -48,7 +48,7 @@ public class UserController extends BaseController {
         UserServiceModel userServiceModel = modelMapper.map(model, UserServiceModel.class);
         userService.registerUser(userServiceModel);
 
-        return redirect("/");
+        return redirect("/users/login");
     }
 
     @GetMapping("/login")

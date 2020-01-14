@@ -10,7 +10,8 @@
 
                 <div class="col container text-center">
                     <th:block th:if="${!file.added}">
-                        <a th:href="@{/questions/{id}(id=${file.fileName})}" class="btn btn-success">Add File</a>
+                        <a th:href="@{/questions/addFile/{fileName}(fileName=${file.fileName})}"
+                           class="btn btn-success">Add File</a>
                     </th:block>
 
                     <th:block th:unless="${!file.added}">

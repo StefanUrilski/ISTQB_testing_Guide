@@ -36,12 +36,12 @@ public class QuestionController extends BaseController {
         return view("questions/status-questions", "filesNames", questionFilesNames);
     }
 
-    @GetMapping("/status/{fileName}")
+    @GetMapping("/addFile/{fileName}")
     @PreAuthorize("hasRole('ROLE_ROOT')")
     public ModelAndView addQuestionFile(@PathVariable String fileName) {
         questionService.saveTextFileDataToDB(fileName);
 
-        return redirect("questions/status-questions");
+        return redirect("/questions/status");
     }
 
     @GetMapping("/all")
