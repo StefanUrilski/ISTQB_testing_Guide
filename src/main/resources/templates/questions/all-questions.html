@@ -1,0 +1,25 @@
+<th:block>
+    <div class="container justify-content-center bg-color mt-5">
+        <h1 class="text-lg-center font-weight-bold">EXAM</h1>
+
+        <th:block th:each="nullItem, iter : ${questions.setOfQuestions}">
+            <h3 class="text-lg-center m-4" th:text="|Question set ${iter.index + 1}|"></h3>
+            <div class="container text-center">
+                <a th:href="@{/questions/{id}(id=|${iter.index + 1}Q10|)}"
+                   class="btn btn-primary m-3">Questions - part 1</a>
+                <a th:href="@{/questions/{id}(id=|${iter.index + 1}Q20|)}"
+                   class="btn btn-primary m-3">Questions - part 2</a>
+                <a th:href="@{/questions/{id}(id=|${iter.index + 1}Q30|)}"
+                   class="btn btn-primary m-3">Questions - part 3</a>
+                <a th:href="@{/questions/{id}(id=|${iter.index + 1}Q40|)}"
+                   class="btn btn-primary m-3">Questions - part 4</a>
+            </div>
+        </th:block>
+
+        <div class="container text-center">
+            <h3 class="text-lg-center m-4">Random Set of Questions</h3>
+            <a th:href="@{/questions/random}" class="btn btn-primary m-3">Random Questions</a>
+            <small class="font-italic" th:text="|${questions.random}% complete|"></small>
+        </div>
+    </div>
+</th:block>
