@@ -23,12 +23,4 @@ public class HomeController extends BaseController {
         return view("home");
     }
 
-    @GetMapping("/1")
-    @ResponseBody
-    public String path() {
-        File file = new File("");
-
-        return file.getAbsolutePath();
-    }
-
 }
