@@ -4,6 +4,7 @@ import com.example.exam.domain.models.view.QuestionInfoViewModel;
 import com.example.exam.service.QuestionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ public class QuestionController extends BaseController {
     }
 
     @GetMapping("all")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ModelAndView allQuestions(Principal principal) {
         QuestionInfoViewModel questions = modelMapper
                 .map(questionService.getQuestionsInfo(principal.getName()), QuestionInfoViewModel.class);
