@@ -6,6 +6,7 @@ import com.example.exam.domain.models.service.question.QuestionFilesInfoServiceM
 import com.example.exam.domain.models.service.question.QuestionFilesServiceModel;
 import com.example.exam.domain.models.service.question.QuestionInfoServiceModel;
 import com.example.exam.domain.models.service.UserServiceModel;
+import com.example.exam.errors.FileAlreadyExistsException;
 import com.example.exam.errors.QuestionSetFailureException;
 import com.example.exam.factory.QuestionFactory;
 import com.example.exam.repository.AddedFilesRepository;
@@ -20,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.example.exam.common.Constants.QUESTION_ADDING_EXCEPTION;
+import static com.example.exam.common.Constants.*;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -65,6 +66,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void saveTextFileDataToDB(String fileName) {
+        AddedFiles existingFileName = addedFilesRepository.findByAddedFileName(fileName);
+
+        if (existingFileName == null) {
+            throw new FileAlreadyExistsException(FILE_ALREADY_EXISTS);
+        }
+
         String questionSet = fileName.substring(0,1);
 
         String[] inputFileQuestions = fileReader.readFile(fileName)
@@ -81,6 +88,7 @@ public class QuestionServiceImpl implements QuestionService {
 
         try {
             questionRepository.saveAll(questions);
+            addedFilesRepository.save(new AddedFiles(fileName));
         } catch (Exception e) {
             throw new QuestionSetFailureException(QUESTION_ADDING_EXCEPTION);
         }
