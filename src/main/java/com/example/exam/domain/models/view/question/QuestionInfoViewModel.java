@@ -1,4 +1,4 @@
-package com.example.exam.domain.models.view;
+package com.example.exam.domain.models.view.question;
 
 public class QuestionInfoViewModel {
 

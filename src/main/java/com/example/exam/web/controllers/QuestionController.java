@@ -1,6 +1,7 @@
 package com.example.exam.web.controllers;
 
-import com.example.exam.domain.models.view.QuestionInfoViewModel;
+import com.example.exam.domain.models.view.question.QuestionInfoViewModel;
+import com.example.exam.domain.models.view.question.QuestionFilesViewModel;
 import com.example.exam.service.QuestionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,16 @@ public class QuestionController extends BaseController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("all")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/status")
+    @PreAuthorize("hasRole('ROLE_ROOT')")
+    public ModelAndView questionsFilesStatus() {
+        QuestionFilesViewModel questionFilesNames =
+                modelMapper.map(questionService.getFilesNames(), QuestionFilesViewModel.class);
+        return view("questions/all-questions", "filesNames", questionFilesNames);
+    }
+
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('ROLE_USER') && !hasRole('ROLE_ROOT')")
     public ModelAndView allQuestions(Principal principal) {
         QuestionInfoViewModel questions = modelMapper
                 .map(questionService.getQuestionsInfo(principal.getName()), QuestionInfoViewModel.class);
