@@ -68,7 +68,7 @@ public class QuestionServiceImpl implements QuestionService {
     public void saveTextFileDataToDB(String fileName) {
         AddedFiles existingFileName = addedFilesRepository.findByAddedFileName(fileName);
 
-        if (existingFileName == null) {
+        if (existingFileName != null) {
             throw new FileAlreadyExistsException(FILE_ALREADY_EXISTS);
         }
 
