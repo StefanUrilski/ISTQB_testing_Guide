@@ -13,6 +13,7 @@ public class User extends BaseEntity implements UserDetails {
     private String name;
     private String password;
     private Set<UserRole> authorities;
+    private Set<Question> questions;
 
     public User() {
         this.authorities = new HashSet<>();
@@ -90,5 +91,14 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setAuthorities(Set<UserRole> authorities) {
         this.authorities = authorities;
+    }
+
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    public Set<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(Set<Question> questions) {
+        this.questions = questions;
     }
 }
