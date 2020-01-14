@@ -39,14 +39,18 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void saveTextFileDataToDB(String fileName) {
         String fileNameWithExtension = String.format("%s.txt", fileName);
+        String questionSet = fileName.substring(0,1);
 
         String[] inputFileQuestions = fileReader.readFile(fileNameWithExtension)
                 .split(QUESTION_DELIMITER_REGEX);
 
         List<Question> questions = Arrays.stream(inputFileQuestions)
-                .map(
-                        questionFactory::buildQuestion
-                )
+                .map(questionWithAnswer -> {
+                    Question question = questionFactory.buildQuestion(questionWithAnswer);
+                    question.setQuestionSet(questionSet);
+
+                    return question;
+                })
                 .collect(Collectors.toList());
 
         try {
