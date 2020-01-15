@@ -1,26 +1,17 @@
 package com.example.exam.domain.models.view.question;
 
-import java.util.Set;
+import java.util.List;
 
 public class QuestionsSetViewModel {
 
-    private String question;
-    private Set<AnswerViewModel> answers;
+    private List<QuestionsAskedViewModel> answers;
     private String questionSetId;
 
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public Set<AnswerViewModel> getAnswers() {
+    public List<QuestionsAskedViewModel> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(Set<AnswerViewModel> answers) {
+    public void setAnswers(List<QuestionsAskedViewModel> answers) {
         this.answers = answers;
     }
 

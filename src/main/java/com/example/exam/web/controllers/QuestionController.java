@@ -66,11 +66,10 @@ public class QuestionController extends BaseController {
     @GetMapping("/set/{questionSetId}")
     @PreAuthorize("hasRole('ROLE_USER') && !hasRole('ROLE_ROOT')")
     public ModelAndView getQuestionsSet(@PathVariable String questionSetId) {
-        List<QuestionsSetViewModel> questions =
-                questionService.getQuestionsByQuestionSetId(questionSetId)
-                        .stream()
-                        .map(question -> modelMapper.map(question, QuestionsSetViewModel.class))
-                        .collect(Collectors.toList());
+        QuestionsSetViewModel questions = modelMapper.map(
+            questionService.getQuestionsByQuestionSetId(questionSetId),
+            QuestionsSetViewModel.class
+        );
 
         return view("questions/set-of-questions", "questions", questions);
     }
