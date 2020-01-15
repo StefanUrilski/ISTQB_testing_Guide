@@ -1,7 +1,8 @@
 package com.example.exam.service;
 
-import com.example.exam.domain.models.service.question.QuestionInfoServiceModel;
 import com.example.exam.domain.models.service.question.QuestionFilesServiceModel;
+import com.example.exam.domain.models.service.question.QuestionInfoServiceModel;
+import com.example.exam.domain.models.service.question.QuestionsSetServiceModel;
 
 public interface QuestionService {
 
@@ -12,4 +13,6 @@ public interface QuestionService {
     QuestionInfoServiceModel getQuestionsInfo(String username);
 
     QuestionFilesServiceModel getFilesNames();
+
+    QuestionsSetServiceModel getQuestionsByQuestionSetId(String questionSetId);
 }

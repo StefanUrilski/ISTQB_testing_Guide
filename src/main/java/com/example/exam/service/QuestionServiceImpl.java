@@ -3,9 +3,7 @@ package com.example.exam.service;
 import com.example.exam.domain.entities.AddedFiles;
 import com.example.exam.domain.entities.Question;
 import com.example.exam.domain.entities.User;
-import com.example.exam.domain.models.service.question.QuestionFilesInfoServiceModel;
-import com.example.exam.domain.models.service.question.QuestionFilesServiceModel;
-import com.example.exam.domain.models.service.question.QuestionInfoServiceModel;
+import com.example.exam.domain.models.service.question.*;
 import com.example.exam.errors.FileAlreadyExistsException;
 import com.example.exam.errors.QuestionSetFailureException;
 import com.example.exam.factory.QuestionFactory;
@@ -76,6 +74,29 @@ public class QuestionServiceImpl implements QuestionService {
         return t -> unique.add(keyExtractor.apply(t));
     }
 
+    private void checkQuestionSetIdAndIfFailsThrowException(String[] tokens, int size) {
+        if (tokens.length != 2 || size == 0) {
+            throw new QuestionSetFailureException(QUESTION_DOES_NOT_EXISTS);
+        }
+
+        boolean isNumber = tokens[1].chars().allMatch(Character::isDigit);
+
+        if (!isNumber) {
+            throw new QuestionSetFailureException(QUESTION_DOES_NOT_EXISTS);
+        }
+    }
+
+    private List<Question> getQuestionsSet(String questionSetId) {
+        String[] tokens = questionSetId.split("Q");
+        String questionSet = tokens[0];
+        List<Question> questions = questionRepository.findAllByQuestionSetOrderById(questionSet);
+
+        checkQuestionSetIdAndIfFailsThrowException(tokens, questions.size());
+
+        int maxQuestions = Integer.parseInt(tokens[1]);
+
+        return questions.subList(maxQuestions - 10, maxQuestions + 1);
+    }
 
     @Override
     public void saveTextFileDataToDB(String fileName) {
@@ -151,5 +172,21 @@ public class QuestionServiceImpl implements QuestionService {
 
         return new QuestionFilesServiceModel(fileNames);
     }
+
+    @Override
+    public QuestionsSetServiceModel getQuestionsByQuestionSetId(String questionSetId) {
+        List<Question> allQuestionsBySet = getQuestionsSet(questionSetId);
+
+        List<QuestionAskedServiceModel> askedQuestions = allQuestionsBySet.stream()
+                .map(question -> modelMapper.map(question, QuestionAskedServiceModel.class))
+                .collect(Collectors.toList());
+
+        QuestionsSetServiceModel questionSet = new QuestionsSetServiceModel();
+        questionSet.setQuestions(askedQuestions);
+        questionSet.setQuestionSetId(questionSetId);
+
+        return questionSet;
+    }
+
 
 }

@@ -17,4 +17,6 @@ public final class Constants {
     public static final String QUESTION_ADDING_EXCEPTION = "An error occurred during adding questions from the file.";
 
     public static final String FILE_ALREADY_EXISTS = "File, that you wanna add, already exists.";
+
+    public static final String QUESTION_DOES_NOT_EXISTS = "Error! Those kinds of questions set do not exist.";
 }
