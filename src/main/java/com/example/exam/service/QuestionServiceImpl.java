@@ -95,7 +95,7 @@ public class QuestionServiceImpl implements QuestionService {
 
         int maxQuestions = Integer.parseInt(tokens[1]);
 
-        return questions.subList(maxQuestions - 10, maxQuestions + 1);
+        return questions.subList(maxQuestions - 10, maxQuestions);
     }
 
     @Override

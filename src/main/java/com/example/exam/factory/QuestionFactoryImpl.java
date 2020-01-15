@@ -23,7 +23,6 @@ public class QuestionFactoryImpl implements QuestionFactory {
 
     @Override
     public Question buildQuestion(String conditionText) {
-        conditionText = conditionText.replace("\r\n", " ");
         String[] text = conditionText.split(QUESTION_ANSWER_DELIMITER);
 
         String[] qAndA = text[0].split("\\(");
@@ -33,7 +32,7 @@ public class QuestionFactoryImpl implements QuestionFactory {
         }
 
         char correctAnswer = text[1].charAt(0);
-        String condition = qAndA[0];
+        String condition = qAndA[0].strip();
         String explanation = text[1].substring(1).trim();
         Set<Answer> answers = answerFactory.buildAnswer(Arrays.stream(qAndA).skip(1).toArray(String[]::new));
 

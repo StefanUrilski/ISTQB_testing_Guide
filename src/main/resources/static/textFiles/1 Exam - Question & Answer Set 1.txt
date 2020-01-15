@@ -103,11 +103,13 @@ You test a system that computes the pass/fail result for a student who attends a
 lecture on software testing. The lecture consists of laboratories and exam. For each
 of these two parts, a student can get from 0 to 50 points {it is always an integer
 number}. The final evaluation is based on the following rule:
+
 Let L be the number of points achieved by the student during the labs.
 Let E be the number of points achieved by the student during the exam.
 Final Result: ¼ L + E.
 If {FinalResult > 50}, then decision :¼ StudentPassed.
 else decision :¼ StudentFailed.
+
 You want to apply the equivalence partitioning technique to a FinalResult
 variable. Assume that each test is a pair {L, E}. Which set of test cases covers all
 valid equivalence classes?

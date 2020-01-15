@@ -4,15 +4,15 @@ import java.util.List;
 
 public class QuestionsSetViewModel {
 
-    private List<QuestionsAskedViewModel> answers;
+    private List<QuestionsAskedViewModel> questionsSet;
     private String questionSetId;
 
-    public List<QuestionsAskedViewModel> getAnswers() {
-        return answers;
+    public List<QuestionsAskedViewModel> getQuestionsSet() {
+        return questionsSet;
     }
 
-    public void setAnswers(List<QuestionsAskedViewModel> answers) {
-        this.answers = answers;
+    public void setQuestionsSet(List<QuestionsAskedViewModel> questionsSet) {
+        this.questionsSet = questionsSet;
     }
 
     public String getQuestionSetId() {
