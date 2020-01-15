@@ -2,16 +2,17 @@ package com.example.exam.service;
 
 import com.example.exam.domain.entities.AddedFiles;
 import com.example.exam.domain.entities.Question;
+import com.example.exam.domain.entities.User;
 import com.example.exam.domain.models.service.question.QuestionFilesInfoServiceModel;
 import com.example.exam.domain.models.service.question.QuestionFilesServiceModel;
 import com.example.exam.domain.models.service.question.QuestionInfoServiceModel;
-import com.example.exam.domain.models.service.UserServiceModel;
 import com.example.exam.errors.FileAlreadyExistsException;
 import com.example.exam.errors.QuestionSetFailureException;
 import com.example.exam.factory.QuestionFactory;
 import com.example.exam.repository.AddedFilesRepository;
 import com.example.exam.repository.QuestionRepository;
 import com.example.exam.util.FileReader;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static com.example.exam.common.Constants.*;
@@ -34,18 +39,21 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
     private final AddedFilesRepository addedFilesRepository;
     private final UserService userService;
+    private final ModelMapper modelMapper;
 
     @Autowired
     public QuestionServiceImpl(FileReader fileReader,
                                QuestionFactory questionFactory,
                                QuestionRepository questionRepository,
                                AddedFilesRepository addedFilesRepository,
-                               UserService userService) {
+                               UserService userService,
+                               ModelMapper modelMapper) {
         this.fileReader = fileReader;
         this.questionFactory = questionFactory;
         this.questionRepository = questionRepository;
         this.addedFilesRepository = addedFilesRepository;
         this.userService = userService;
+        this.modelMapper = modelMapper;
     }
 
     private int calcPercentage(int allQuestions, int userVisitedQuestionCount) {
@@ -61,6 +69,11 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
         return Arrays.asList(fileList);
+    }
+
+    private static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Set<Object> unique = ConcurrentHashMap.newKeySet();
+        return t -> unique.add(keyExtractor.apply(t));
     }
 
 
@@ -96,17 +109,21 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionInfoServiceModel getQuestionsInfo(String username) {
-        UserServiceModel user = userService.getUserByName(username);
-        int allQuestions = (int) questionRepository.count();
+        User user = modelMapper.map(userService.getUserByName(username), User.class);
+        List<Question> allQuestions = questionRepository.findAll();
 
-        if (allQuestions == 0) return null;
+        if (allQuestions.size() == 0) return null;
 
-        // heroku error
-//        int userVisitedQuestionCount = questionRepository.findAllVisitedQuestionsForUser(user.getId());
+        int userVisitedQuestionCount = (int) allQuestions.stream()
+                .filter(question -> question.getUsers().contains(user))
+                .count();
 
-        int allQuestionSetsNumber = questionRepository.findAllQuestionSetsNumber();
-//        int percentage = calcPercentage(allQuestions, userVisitedQuestionCount);
-        int percentage = 0;
+        int allQuestionSetsNumber = (int) allQuestions.stream()
+                .filter(distinctByKey(Question::getQuestionSet))
+                .count();
+
+
+        int percentage = calcPercentage(allQuestions.size(), userVisitedQuestionCount);
 
         return new QuestionInfoServiceModel(allQuestionSetsNumber, percentage);
     }
