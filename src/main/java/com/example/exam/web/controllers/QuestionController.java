@@ -3,6 +3,7 @@ package com.example.exam.web.controllers;
 import com.example.exam.domain.models.service.question.QuestionInfoServiceModel;
 import com.example.exam.domain.models.view.question.QuestionInfoViewModel;
 import com.example.exam.domain.models.view.question.QuestionFilesViewModel;
+import com.example.exam.domain.models.view.question.QuestionsSetViewModel;
 import com.example.exam.service.QuestionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/questions")
@@ -58,6 +61,18 @@ public class QuestionController extends BaseController {
                 .map(questionsInfo, QuestionInfoViewModel.class);
 
         return view("questions/all-questions", "questions", questions);
+    }
+
+    @GetMapping("/set/{questionSetId}")
+    @PreAuthorize("hasRole('ROLE_USER') && !hasRole('ROLE_ROOT')")
+    public ModelAndView getQuestionsSet(@PathVariable String questionSetId) {
+        List<QuestionsSetViewModel> questions =
+                questionService.getQuestionsByQuestionSetId(questionSetId)
+                        .stream()
+                        .map(question -> modelMapper.map(question, QuestionsSetViewModel.class))
+                        .collect(Collectors.toList());
+
+        return view("questions/set-of-questions", "questions", questions);
     }
 
 }
