@@ -6,13 +6,13 @@
             <th:block th:each="nullItem, iter : ${questions.setOfQuestions}">
                 <h3 class="text-lg-center m-4" th:text="|Question set ${iter.index + 1}|"></h3>
                 <div class="container text-center">
-                    <a th:href="@{/questions/{id}(id=|${iter.index + 1}Q10|)}"
+                    <a th:href="@{/questions/set/{id}(id=|${iter.index + 1}Q10|)}"
                        class="btn btn-primary m-3">Questions - part 1</a>
-                    <a th:href="@{/questions/{id}(id=|${iter.index + 1}Q20|)}"
+                    <a th:href="@{/questions/set/{id}(id=|${iter.index + 1}Q20|)}"
                        class="btn btn-primary m-3">Questions - part 2</a>
-                    <a th:href="@{/questions/{id}(id=|${iter.index + 1}Q30|)}"
+                    <a th:href="@{/questions/set/{id}(id=|${iter.index + 1}Q30|)}"
                        class="btn btn-primary m-3">Questions - part 3</a>
-                    <a th:href="@{/questions/{id}(id=|${iter.index + 1}Q40|)}"
+                    <a th:href="@{/questions/set/{id}(id=|${iter.index + 1}Q40|)}"
                        class="btn btn-primary m-3">Questions - part 4</a>
                 </div>
             </th:block>
@@ -21,8 +21,7 @@
                 <h3 class="text-lg-center m-4">Random Set of Questions</h3>
                 <a th:href="@{/questions/random}" class="btn btn-primary mt-3">Random Questions</a>
                 <br/>
-                <!--            <small class="font-italic" th:text="|${questions.random}% complete|"></small>-->
-                <small class="font-italic">*Still under development.</small>
+                <small class="font-italic" th:text="|*${questions.random}% complete|"></small>
             </div>
         </th:block>
     </div>
