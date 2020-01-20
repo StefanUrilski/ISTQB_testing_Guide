@@ -14,7 +14,7 @@
                     <h5 th:text="|${iter.index + 1}. ${item.question}|"></h5>
 
                     <th:block th:each="setOfAnswers : ${item.answers}">
-                        <input type="radio" name="answerSymbol" th:id="${setOfAnswers.description}"
+                        <input type="radio" th:name="|answerSymbol${iter.index}|" th:id="${setOfAnswers.description}"
                                th:value="${setOfAnswers.symbol}">
 
                         <label class="text-center" th:text="|${setOfAnswers.symbol}) ${setOfAnswers.description}|"
@@ -22,11 +22,11 @@
                         <br/>
                     </th:block>
 
-                    <input type="hidden" name="questionId" th:value="${item.id}">
+                    <input type="hidden" th:name="|questionId${iter.index}|" th:value="${item.id}">
                 </div>
             </th:block>
 
-            <button type="submit" id="questionButton"></button>
+            <button type="submit" class="btn btn-success ">Finish</button>
         </div>
     </form>
 </th:block>

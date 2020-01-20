@@ -3,6 +3,10 @@ package com.example.exam.service;
 import com.example.exam.domain.entities.AddedFiles;
 import com.example.exam.domain.entities.Question;
 import com.example.exam.domain.entities.User;
+import com.example.exam.domain.models.binding.TestAnswerBindingModel;
+import com.example.exam.domain.models.binding.TestBindingModel;
+import com.example.exam.domain.models.service.ResultQuestsServiceModel;
+import com.example.exam.domain.models.service.TestAnswerServiceModel;
 import com.example.exam.domain.models.service.question.*;
 import com.example.exam.errors.FileAlreadyExistsException;
 import com.example.exam.errors.QuestionSetFailureException;
@@ -16,10 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -102,6 +103,27 @@ public class QuestionServiceImpl implements QuestionService {
         return questions.subList(maxQuestions - 10, maxQuestions);
     }
 
+    private List<FigureServiceModel> getAllFiguresAsServiceModel() {
+        return figureRepository.findAll().stream()
+                .map(figure -> modelMapper.map(figure, FigureServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
+    private List<TestAnswerBindingModel> getTestAnswers(TestBindingModel testAnswers) {
+        return new ArrayList<>() {{
+            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol0(), testAnswers.getQuestionId0()));
+            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol1(), testAnswers.getQuestionId1()));
+            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol2(), testAnswers.getQuestionId2()));
+            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol3(), testAnswers.getQuestionId3()));
+            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol4(), testAnswers.getQuestionId4()));
+            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol5(), testAnswers.getQuestionId5()));
+            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol6(), testAnswers.getQuestionId6()));
+            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol7(), testAnswers.getQuestionId7()));
+            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol8(), testAnswers.getQuestionId8()));
+            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol9(), testAnswers.getQuestionId9()));
+        }};
+    }
+
     @Override
     public void saveTextFileDataToDB(String fileName) {
         AddedFiles existingFileName = addedFilesRepository.findByAddedFileName(fileName);
@@ -181,21 +203,54 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionsSetServiceModel getQuestionsByQuestionSetId(String questionSetId) {
         List<Question> allQuestionsBySet = getQuestionsSet(questionSetId);
 
-        List<QuestionAskedServiceModel> askedQuestions = allQuestionsBySet.stream()
-                .map(question -> modelMapper.map(question, QuestionAskedServiceModel.class))
-                .collect(Collectors.toList());
+        List<QuestionServiceModel> askedQuestions = allQuestionsBySet.stream()
+                .map(question -> {
+                    QuestionServiceModel model = modelMapper.map(question, QuestionServiceModel.class);
+                    Set<AnswerServiceModel> answers = model.getAnswers().stream()
+                            .sorted(Comparator.comparingInt(AnswerServiceModel::getSymbol))
+                            .collect(Collectors.toCollection(LinkedHashSet::new));
+                    model.setAnswers(answers);
 
-        List<FigureServiceModel> figures = figureRepository.findAll().stream()
-                .map(figure -> modelMapper.map(figure, FigureServiceModel.class))
+                    return model;
+                })
                 .collect(Collectors.toList());
 
         QuestionsSetServiceModel questionSet = new QuestionsSetServiceModel();
         questionSet.setQuestions(askedQuestions);
         questionSet.setQuestionSetId(questionSetId);
-        questionSet.setTables(figures);
+        questionSet.setTables(getAllFiguresAsServiceModel());
 
         return questionSet;
     }
 
+    @Override
+    public ResultQuestsServiceModel checkAnswers(TestBindingModel testAnswers) {
+        Map<Long, Character> answers = new HashMap<>();
+
+        getTestAnswers(testAnswers)
+                .forEach(testAnswer -> answers.put(testAnswer.getQuestionId(), testAnswer.getAnswerSymbol()));
+
+        List<TestAnswerServiceModel> correctAnswers = questionRepository.findAll().stream()
+                .filter(question -> answers.get(question.getId()) != null)
+                .map(question -> {
+                    TestAnswerServiceModel model = modelMapper.map(question, TestAnswerServiceModel.class);
+                    Set<AnswerServiceModel> answersSet = model.getAnswers().stream()
+                            .sorted(Comparator.comparingInt(AnswerServiceModel::getSymbol))
+                            .collect(Collectors.toCollection(LinkedHashSet::new));
+                    model.setAnswers(answersSet);
+
+                    boolean isAnswerCorrect = answers.get(question.getId()).equals(question.getCorrectAnswer());
+                    model.setValid(isAnswerCorrect);
+
+                    return model;
+                })
+                .collect(Collectors.toList());
+
+
+        ResultQuestsServiceModel result = new ResultQuestsServiceModel();
+        result.setCorrectAnswers(correctAnswers);
+        result.setTables(getAllFiguresAsServiceModel());
+        return result;
+    }
 
 }

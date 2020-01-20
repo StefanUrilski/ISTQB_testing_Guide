@@ -5,15 +5,15 @@ import java.util.List;
 
 public class QuestionsSetServiceModel {
 
-    private List<QuestionAskedServiceModel> questions;
+    private List<QuestionServiceModel> questions;
     private String questionSetId;
     private List<FigureServiceModel> tables;
 
-    public List<QuestionAskedServiceModel> getQuestions() {
+    public List<QuestionServiceModel> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<QuestionAskedServiceModel> questions) {
+    public void setQuestions(List<QuestionServiceModel> questions) {
         this.questions = questions;
     }
 

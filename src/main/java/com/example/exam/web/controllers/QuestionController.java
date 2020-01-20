@@ -1,6 +1,11 @@
 package com.example.exam.web.controllers;
 
+import com.example.exam.domain.models.binding.TestAnswerBindingModel;
+import com.example.exam.domain.models.binding.TestBindingModel;
+import com.example.exam.domain.models.service.ResultQuestsServiceModel;
 import com.example.exam.domain.models.service.question.QuestionInfoServiceModel;
+import com.example.exam.domain.models.view.ResultQuestsViewModel;
+import com.example.exam.domain.models.view.TestAnswerViewModel;
 import com.example.exam.domain.models.view.question.QuestionInfoViewModel;
 import com.example.exam.domain.models.view.question.QuestionFilesViewModel;
 import com.example.exam.domain.models.view.question.QuestionsSetViewModel;
@@ -9,9 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
@@ -70,6 +73,17 @@ public class QuestionController extends BaseController {
         );
 
         return view("questions/set-of-questions", "questions", questions);
+    }
+
+    @PostMapping("/set/exam")
+    @PreAuthorize("hasRole('ROLE_USER') && !hasRole('ROLE_ROOT')")
+    public ModelAndView getQuestionsSetResults(@ModelAttribute TestBindingModel test) {
+        ResultQuestsViewModel result = modelMapper.map(
+                questionService.checkAnswers(test),
+                ResultQuestsViewModel.class
+        );
+
+        return view("questions/set-of-answered-questions", "questions", result);
     }
 
 }
