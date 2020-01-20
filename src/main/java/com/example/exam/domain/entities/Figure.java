@@ -11,7 +11,7 @@ public class Figure extends BaseEntity {
     private String url;
     private String name;
 
-    @Column(columnDefinition = "url", nullable = false)
+    @Column(name = "url", nullable = false)
     public String getUrl() {
         return url;
     }
@@ -20,7 +20,7 @@ public class Figure extends BaseEntity {
         this.url = url;
     }
 
-    @Column(columnDefinition = "name", nullable = false)
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }
