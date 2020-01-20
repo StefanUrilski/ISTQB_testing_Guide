@@ -100,6 +100,10 @@ public class QuestionServiceImpl implements QuestionService {
 
         int maxQuestions = Integer.parseInt(tokens[1]);
 
+        if (maxQuestions > questions.size()) {
+            throw new QuestionSetFailureException(QUESTION_DOES_NOT_EXISTS);
+        }
+
         return questions.subList(maxQuestions - 10, maxQuestions);
     }
 
