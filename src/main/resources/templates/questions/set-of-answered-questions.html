@@ -1,0 +1,29 @@
+<th:block>
+    <form class="form mx-auto" th:action="@{/questions/set/exam}" method="post">
+        <div class="sidenav">
+            <th:block th:each="table : ${questions.tables}">
+                <a th:href="@{table.url}" th:text="table.name"></a>
+            </th:block>
+        </div>
+
+        <div class="main container justify-content-center bg-color mt-5" style="min-height: 481px">
+            <h1 class="font-weight-bold pl-5 ml-5" th:text="|Results|"></h1>
+
+            <th:block th:each="item, iter : ${questions.correctAnswers}">
+                <div class="container justify-content-center question pb-2">
+                    <h5 th:text="|${iter.index + 1}. ${item.question}|"></h5>
+                    <ul>
+                        <th:block th:each="setOfAnswers : ${item.answers}">
+                            <li th:text="|${setOfAnswers.symbol}) ${setOfAnswers.description}|"></li>
+                        </th:block>
+                    </ul>
+                    <h6 th:if="${item.valid}" style="color: green"
+                        th:utext="|Correct answer is: ${item.correctAnswer} <br/>   ${item.explanation}"></h6>
+                    <h6 th:unless="${item.valid}" style="color: red"
+                        th:utext="|Correct answer is: ${item.correctAnswer} <br/>   ${item.explanation}"></h6>
+                </div>
+            </th:block>
+
+        </div>
+    </form>
+</th:block>
