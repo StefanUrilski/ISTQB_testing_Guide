@@ -2,13 +2,14 @@ package com.example.exam.domain.models.view;
 
 import com.example.exam.domain.models.view.question.AnswerViewModel;
 
+import java.util.List;
 import java.util.Set;
 
 public class TestAnswerViewModel {
 
     private long id;
     private String question;
-    private Set<AnswerViewModel> answers;
+    private List<AnswerViewModel> answers;
     private char correctAnswer;
     private String explanation;
     private boolean valid;
@@ -29,11 +30,11 @@ public class TestAnswerViewModel {
         this.question = question;
     }
 
-    public Set<AnswerViewModel> getAnswers() {
+    public List<AnswerViewModel> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(Set<AnswerViewModel> answers) {
+    public void setAnswers(List<AnswerViewModel> answers) {
         this.answers = answers;
     }
 

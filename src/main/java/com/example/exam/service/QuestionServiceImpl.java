@@ -124,6 +124,13 @@ public class QuestionServiceImpl implements QuestionService {
         }};
     }
 
+    private List<AnswerServiceModel> orderAnswers(List<AnswerServiceModel> answers) {
+        return answers.stream()
+                .sorted(Comparator.comparingInt(AnswerServiceModel::getSymbol))
+                .collect(Collectors.toList());
+    }
+
+
     @Override
     public void saveTextFileDataToDB(String fileName) {
         AddedFiles existingFileName = addedFilesRepository.findByAddedFileName(fileName);
@@ -206,10 +213,7 @@ public class QuestionServiceImpl implements QuestionService {
         List<QuestionServiceModel> askedQuestions = allQuestionsBySet.stream()
                 .map(question -> {
                     QuestionServiceModel model = modelMapper.map(question, QuestionServiceModel.class);
-                    Set<AnswerServiceModel> answers = model.getAnswers().stream()
-                            .sorted(Comparator.comparingInt(AnswerServiceModel::getSymbol))
-                            .collect(Collectors.toCollection(LinkedHashSet::new));
-                    model.setAnswers(answers);
+                    model.setAnswers(orderAnswers(model.getAnswers()));
 
                     return model;
                 })
@@ -234,10 +238,7 @@ public class QuestionServiceImpl implements QuestionService {
                 .filter(question -> answers.get(question.getId()) != null)
                 .map(question -> {
                     TestAnswerServiceModel model = modelMapper.map(question, TestAnswerServiceModel.class);
-                    Set<AnswerServiceModel> answersSet = model.getAnswers().stream()
-                            .sorted(Comparator.comparingInt(AnswerServiceModel::getSymbol))
-                            .collect(Collectors.toCollection(LinkedHashSet::new));
-                    model.setAnswers(answersSet);
+                    model.setAnswers(orderAnswers(model.getAnswers()));
 
                     boolean isAnswerCorrect = answers.get(question.getId()).equals(question.getCorrectAnswer());
                     model.setValid(isAnswerCorrect);

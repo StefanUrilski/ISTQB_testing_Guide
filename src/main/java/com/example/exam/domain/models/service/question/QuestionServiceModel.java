@@ -2,13 +2,14 @@ package com.example.exam.domain.models.service.question;
 
 import com.example.exam.domain.models.service.UserServiceModel;
 
+import java.util.List;
 import java.util.Set;
 
 public class QuestionServiceModel {
 
     private long id;
     private String question;
-    private Set<AnswerServiceModel> answers;
+    private List<AnswerServiceModel> answers;
     private char correctAnswer;
     private String explanation;
     private String questionSet;
@@ -31,11 +32,11 @@ public class QuestionServiceModel {
         this.question = question;
     }
 
-    public Set<AnswerServiceModel> getAnswers() {
+    public List<AnswerServiceModel> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(Set<AnswerServiceModel> answers) {
+    public void setAnswers(List<AnswerServiceModel> answers) {
         this.answers = answers;
     }
 

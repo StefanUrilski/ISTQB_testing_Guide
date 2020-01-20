@@ -1,12 +1,13 @@
 package com.example.exam.domain.models.view.question;
 
+import java.util.List;
 import java.util.Set;
 
 public class QuestionsAskedViewModel {
 
     private long id;
     private String question;
-    private Set<AnswerViewModel> answers;
+    private List<AnswerViewModel> answers;
 
     public long getId() {
         return id;
@@ -24,11 +25,11 @@ public class QuestionsAskedViewModel {
         this.question = question;
     }
 
-    public Set<AnswerViewModel> getAnswers() {
+    public List<AnswerViewModel> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(Set<AnswerViewModel> answers) {
+    public void setAnswers(List<AnswerViewModel> answers) {
         this.answers = answers;
     }
 }
