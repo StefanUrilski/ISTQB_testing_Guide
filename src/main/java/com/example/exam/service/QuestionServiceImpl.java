@@ -8,6 +8,7 @@ import com.example.exam.errors.FileAlreadyExistsException;
 import com.example.exam.errors.QuestionSetFailureException;
 import com.example.exam.factory.QuestionFactory;
 import com.example.exam.repository.AddedFilesRepository;
+import com.example.exam.repository.FigureRepository;
 import com.example.exam.repository.QuestionRepository;
 import com.example.exam.util.FileReader;
 import org.modelmapper.ModelMapper;
@@ -36,6 +37,7 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionFactory questionFactory;
     private final QuestionRepository questionRepository;
     private final AddedFilesRepository addedFilesRepository;
+    private final FigureRepository figureRepository;
     private final UserService userService;
     private final ModelMapper modelMapper;
 
@@ -44,12 +46,14 @@ public class QuestionServiceImpl implements QuestionService {
                                QuestionFactory questionFactory,
                                QuestionRepository questionRepository,
                                AddedFilesRepository addedFilesRepository,
+                               FigureRepository figureRepository,
                                UserService userService,
                                ModelMapper modelMapper) {
         this.fileReader = fileReader;
         this.questionFactory = questionFactory;
         this.questionRepository = questionRepository;
         this.addedFilesRepository = addedFilesRepository;
+        this.figureRepository = figureRepository;
         this.userService = userService;
         this.modelMapper = modelMapper;
     }
@@ -181,9 +185,14 @@ public class QuestionServiceImpl implements QuestionService {
                 .map(question -> modelMapper.map(question, QuestionAskedServiceModel.class))
                 .collect(Collectors.toList());
 
+        List<FigureServiceModel> figures = figureRepository.findAll().stream()
+                .map(figure -> modelMapper.map(figure, FigureServiceModel.class))
+                .collect(Collectors.toList());
+
         QuestionsSetServiceModel questionSet = new QuestionsSetServiceModel();
         questionSet.setQuestions(askedQuestions);
         questionSet.setQuestionSetId(questionSetId);
+        questionSet.setTables(figures);
 
         return questionSet;
     }
