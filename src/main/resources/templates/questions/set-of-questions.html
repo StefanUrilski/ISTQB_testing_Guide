@@ -16,7 +16,7 @@
                     <th:block th:each="setOfAnswers : ${item.answers}">
                         <label>
                             <input type="radio" th:name="|answerSymbol${iter.index}|" th:value="${setOfAnswers.symbol}"
-                                   th:text="| ${setOfAnswers.symbol}) ${setOfAnswers.description}|">
+                                   th:text="| ${setOfAnswers.symbol}) ${setOfAnswers.description}|" aria-required="true">
                         </label>
                         <br/>
                     </th:block>
