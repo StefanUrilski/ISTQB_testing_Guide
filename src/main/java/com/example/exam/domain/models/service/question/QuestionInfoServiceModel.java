@@ -3,14 +3,14 @@ package com.example.exam.domain.models.service.question;
 public class QuestionInfoServiceModel {
 
     private Integer[] setOfQuestions;
-    private int random;
+    private int randomCoverage;
 
     public QuestionInfoServiceModel() {
     }
 
-    public QuestionInfoServiceModel(int setOfQuestions, int random) {
+    public QuestionInfoServiceModel(int setOfQuestions, int randomCoverage) {
         this.setOfQuestions = new Integer[setOfQuestions];
-        this.random = random;
+        this.randomCoverage = randomCoverage;
     }
 
     public Integer[] getSetOfQuestions() {
@@ -21,11 +21,11 @@ public class QuestionInfoServiceModel {
         this.setOfQuestions = setOfQuestions;
     }
 
-    public int getRandom() {
-        return random;
+    public int getRandomCoverage() {
+        return randomCoverage;
     }
 
-    public void setRandom(int random) {
-        this.random = random;
+    public void setRandomCoverage(int randomCoverage) {
+        this.randomCoverage = randomCoverage;
     }
 }

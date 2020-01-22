@@ -3,7 +3,7 @@ package com.example.exam.domain.models.view.question;
 public class QuestionInfoViewModel {
 
     private Integer[] setOfQuestions;
-    private int random;
+    private int randomCoverage;
 
     public Integer[] getSetOfQuestions() {
         return setOfQuestions;
@@ -13,11 +13,11 @@ public class QuestionInfoViewModel {
         this.setOfQuestions = setOfQuestions;
     }
 
-    public int getRandom() {
-        return random;
+    public int getRandomCoverage() {
+        return randomCoverage;
     }
 
-    public void setRandom(int random) {
-        this.random = random;
+    public void setRandomCoverage(int randomCoverage) {
+        this.randomCoverage = randomCoverage;
     }
 }
