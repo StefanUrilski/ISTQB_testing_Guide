@@ -64,8 +64,8 @@ public class QuestionServiceImpl implements QuestionService {
         this.randomProvider = randomProvider;
     }
 
-    private int calcPercentage(int allQuestions, int userVisitedQuestionCount) {
-        return (userVisitedQuestionCount / allQuestions) * 100;
+    private double calcPercentage(int allQuestions, int userVisitedQuestionCount) {
+        return  ((double) userVisitedQuestionCount / (double) allQuestions) * 100;
     }
 
     private List<String> getExistedFilesNames() {
@@ -174,6 +174,15 @@ public class QuestionServiceImpl implements QuestionService {
         return false;
     }
 
+    private boolean notContainUser(Set<User> users, User currUser) {
+        for (User user : users) {
+            if (user.getId() == currUser.getId()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     @Override
     public void saveTextFileDataToDB(String fileName) {
@@ -221,7 +230,7 @@ public class QuestionServiceImpl implements QuestionService {
                 .count();
 
 
-        int percentage = calcPercentage(allQuestions.size(), userVisitedQuestionCount);
+        int percentage = (int) calcPercentage(allQuestions.size(), userVisitedQuestionCount);
 
         return new QuestionInfoServiceModel(allQuestionSetsNumber, percentage);
     }
@@ -289,7 +298,7 @@ public class QuestionServiceImpl implements QuestionService {
         User user = modelMapper.map(userService.getUserByName(userName), User.class);
 
         List<Question> unseenQuestions = questionRepository.findAll().stream()
-                .filter(question -> containsUser(question.getUsers(), user))
+                .filter(question -> notContainUser(question.getUsers(), user))
                 .collect(Collectors.toList());
 
         if (unseenQuestions.size() < 10) {
