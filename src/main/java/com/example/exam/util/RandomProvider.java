@@ -1,6 +1,6 @@
 package com.example.exam.util;
 
-import java.util.List;
+import java.util.Set;
 
 public interface RandomProvider {
 
@@ -14,5 +14,5 @@ public interface RandomProvider {
      * and {@code maxNumber} (exclusive).
      * @throws IllegalArgumentException if bound is not positive (from Random class).
      */
-    List<Integer> getTenRandomNumbers(int maxNumber);
+    Set<Integer> getTenUniqueRandomNumbers(int maxNumber);
 }
