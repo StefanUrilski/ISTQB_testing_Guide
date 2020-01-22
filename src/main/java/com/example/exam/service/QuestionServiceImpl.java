@@ -8,6 +8,7 @@ import com.example.exam.domain.models.binding.TestBindingModel;
 import com.example.exam.domain.models.service.ResultQuestsServiceModel;
 import com.example.exam.domain.models.service.TestAnswerServiceModel;
 import com.example.exam.domain.models.service.question.*;
+import com.example.exam.errors.AllQuestionVisitedException;
 import com.example.exam.errors.FileAlreadyExistsException;
 import com.example.exam.errors.QuestionSetFailureException;
 import com.example.exam.factory.QuestionFactory;
@@ -15,6 +16,7 @@ import com.example.exam.repository.AddedFilesRepository;
 import com.example.exam.repository.FigureRepository;
 import com.example.exam.repository.QuestionRepository;
 import com.example.exam.util.FileReader;
+import com.example.exam.util.RandomProvider;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +43,7 @@ public class QuestionServiceImpl implements QuestionService {
     private final FigureRepository figureRepository;
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final RandomProvider randomProvider;
 
     @Autowired
     public QuestionServiceImpl(FileReader fileReader,
@@ -49,7 +52,8 @@ public class QuestionServiceImpl implements QuestionService {
                                AddedFilesRepository addedFilesRepository,
                                FigureRepository figureRepository,
                                UserService userService,
-                               ModelMapper modelMapper) {
+                               ModelMapper modelMapper,
+                               RandomProvider randomProvider) {
         this.fileReader = fileReader;
         this.questionFactory = questionFactory;
         this.questionRepository = questionRepository;
@@ -57,6 +61,7 @@ public class QuestionServiceImpl implements QuestionService {
         this.figureRepository = figureRepository;
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.randomProvider = randomProvider;
     }
 
     private int calcPercentage(int allQuestions, int userVisitedQuestionCount) {
@@ -133,6 +138,33 @@ public class QuestionServiceImpl implements QuestionService {
                 .sorted(Comparator.comparingInt(AnswerServiceModel::getSymbol))
                 .collect(Collectors.toList());
     }
+
+    private QuestionsSetServiceModel getQuestionsSetServiceModel(String questionSetId, List<Question> allQuestionsBySet) {
+        List<QuestionServiceModel> askedQuestions = allQuestionsBySet.stream()
+                .map(question -> {
+                    QuestionServiceModel model = modelMapper.map(question, QuestionServiceModel.class);
+                    model.setAnswers(orderAnswers(model.getAnswers()));
+
+                    return model;
+                })
+                .collect(Collectors.toList());
+
+        QuestionsSetServiceModel questionSet = new QuestionsSetServiceModel();
+        questionSet.setQuestions(askedQuestions);
+        questionSet.setQuestionSetId(questionSetId);
+        questionSet.setTables(getAllFiguresAsServiceModel());
+        return questionSet;
+    }
+
+    private List<Question> getTenRandomQuestions(List<Question> questions) {
+        List<Question> randomQuestions = new ArrayList<>();
+
+        randomProvider.getTenRandomNumbers(questions.size())
+                .forEach(randomNumber -> randomQuestions.add(questions.get(randomNumber)));
+
+        return randomQuestions;
+    }
+
 
 
     @Override
@@ -214,21 +246,7 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionsSetServiceModel getQuestionsByQuestionSetId(String questionSetId) {
         List<Question> allQuestionsBySet = getQuestionsSet(questionSetId);
 
-        List<QuestionServiceModel> askedQuestions = allQuestionsBySet.stream()
-                .map(question -> {
-                    QuestionServiceModel model = modelMapper.map(question, QuestionServiceModel.class);
-                    model.setAnswers(orderAnswers(model.getAnswers()));
-
-                    return model;
-                })
-                .collect(Collectors.toList());
-
-        QuestionsSetServiceModel questionSet = new QuestionsSetServiceModel();
-        questionSet.setQuestions(askedQuestions);
-        questionSet.setQuestionSetId(questionSetId);
-        questionSet.setTables(getAllFiguresAsServiceModel());
-
-        return questionSet;
+        return getQuestionsSetServiceModel(questionSetId, allQuestionsBySet);
     }
 
     @Override
@@ -258,4 +276,26 @@ public class QuestionServiceImpl implements QuestionService {
         return result;
     }
 
+    @Override
+    public QuestionsSetServiceModel getRandomQuestionByUser(String userName) {
+        User user = modelMapper.map(userService.getUserByName(userName), User.class);
+
+        List<Question> unseenQuestions = questionRepository.findAll().stream()
+                .filter(question -> !question.getUsers().contains(user))
+                .collect(Collectors.toList());
+
+        if (unseenQuestions.size() < 10) {
+            throw new AllQuestionVisitedException();
+        }
+
+        Collections.shuffle(unseenQuestions);
+
+        if (unseenQuestions.size() != 10) {
+            unseenQuestions = getTenRandomQuestions(unseenQuestions);
+        }
+
+        return getQuestionsSetServiceModel(null, unseenQuestions);
+    }
+
 }
+

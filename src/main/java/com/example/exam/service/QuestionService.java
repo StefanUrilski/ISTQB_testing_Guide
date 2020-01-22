@@ -19,4 +19,6 @@ public interface QuestionService {
     QuestionsSetServiceModel getQuestionsByQuestionSetId(String questionSetId);
 
     ResultQuestsServiceModel checkAnswers(TestBindingModel testAnswers);
+
+    QuestionsSetServiceModel getRandomQuestionByUser(String userName);
 }
