@@ -20,5 +20,7 @@ public interface QuestionService {
 
     ResultQuestsServiceModel checkAnswers(TestBindingModel testAnswers);
 
-    QuestionsSetServiceModel getRandomQuestionByUser(String userName);
+    QuestionsSetServiceModel getRandomQuestionByUser(String username);
+
+    void startOver(String username);
 }

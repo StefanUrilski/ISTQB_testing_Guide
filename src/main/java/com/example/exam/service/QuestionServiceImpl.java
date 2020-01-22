@@ -64,6 +64,10 @@ public class QuestionServiceImpl implements QuestionService {
         this.randomProvider = randomProvider;
     }
 
+    private User getUserEntityByUserName(String username) {
+        return modelMapper.map(userService.getUserByName(username), User.class);
+    }
+
     private double calcPercentage(int allQuestions, int userVisitedQuestionCount) {
         return  ((double) userVisitedQuestionCount / (double) allQuestions) * 100;
     }
@@ -216,7 +220,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionInfoServiceModel getQuestionsInfo(String username) {
-        User user = modelMapper.map(userService.getUserByName(username), User.class);
+        User user = getUserEntityByUserName(username);
         List<Question> allQuestions = questionRepository.findAll();
 
         if (allQuestions.size() == 0) return null;
@@ -296,8 +300,8 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionsSetServiceModel getRandomQuestionByUser(String userName) {
-        User user = modelMapper.map(userService.getUserByName(userName), User.class);
+    public QuestionsSetServiceModel getRandomQuestionByUser(String username) {
+        User user = getUserEntityByUserName(username);
 
         List<Question> unseenQuestions = questionRepository.findAll().stream()
                 .filter(question -> notContainUser(question.getUsers(), user))
@@ -318,5 +322,19 @@ public class QuestionServiceImpl implements QuestionService {
         return getQuestionsSetServiceModel("Random", unseenQuestions);
     }
 
+    @Override
+    public void startOver(String username) {
+        User user = getUserEntityByUserName(username);
+        List<Question> questions = questionRepository.findAll().stream()
+                .peek(question -> {
+                    Set<User> users = question.getUsers().stream()
+                            .filter(u -> u.getId() != user.getId())
+                            .collect(Collectors.toSet());
+                    question.setUsers(users);
+                })
+                .collect(Collectors.toList());
+
+        questionRepository.saveAll(questions);
+    }
 }
 
