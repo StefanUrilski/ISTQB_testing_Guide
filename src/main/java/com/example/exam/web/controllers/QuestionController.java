@@ -86,4 +86,14 @@ public class QuestionController extends BaseController {
         return view("questions/set-of-answered-questions", "questions", result);
     }
 
+    @GetMapping("/random")
+    @PreAuthorize("hasRole('ROLE_USER') && !hasRole('ROLE_ROOT')")
+    public ModelAndView getQuestionsSetResults(Principal principal) {
+        QuestionsSetViewModel questions = modelMapper.map(
+                questionService.getRandomQuestionByUser(principal.getName()),
+                QuestionsSetViewModel.class
+        );
+
+        return view("questions/set-of-questions", "questions", questions);
+    }
 }

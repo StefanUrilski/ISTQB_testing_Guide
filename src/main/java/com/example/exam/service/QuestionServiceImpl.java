@@ -159,12 +159,20 @@ public class QuestionServiceImpl implements QuestionService {
     private List<Question> getTenRandomQuestions(List<Question> questions) {
         List<Question> randomQuestions = new ArrayList<>();
 
-        randomProvider.getTenRandomNumbers(questions.size())
+        randomProvider.getTenUniqueRandomNumbers(questions.size())
                 .forEach(randomNumber -> randomQuestions.add(questions.get(randomNumber)));
 
         return randomQuestions;
     }
 
+    private boolean containsUser(Set<User> users, User currUser) {
+        for (User user : users) {
+            if (user.getId() == currUser.getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     @Override
@@ -205,7 +213,7 @@ public class QuestionServiceImpl implements QuestionService {
         if (allQuestions.size() == 0) return null;
 
         int userVisitedQuestionCount = (int) allQuestions.stream()
-                .filter(question -> question.getUsers().contains(user))
+                .filter(question -> containsUser(question.getUsers(), user))
                 .count();
 
         int allQuestionSetsNumber = (int) allQuestions.stream()
@@ -281,20 +289,22 @@ public class QuestionServiceImpl implements QuestionService {
         User user = modelMapper.map(userService.getUserByName(userName), User.class);
 
         List<Question> unseenQuestions = questionRepository.findAll().stream()
-                .filter(question -> !question.getUsers().contains(user))
+                .filter(question -> containsUser(question.getUsers(), user))
                 .collect(Collectors.toList());
 
         if (unseenQuestions.size() < 10) {
             throw new AllQuestionVisitedException();
         }
 
-        Collections.shuffle(unseenQuestions);
-
         if (unseenQuestions.size() != 10) {
             unseenQuestions = getTenRandomQuestions(unseenQuestions);
         }
 
-        return getQuestionsSetServiceModel(null, unseenQuestions);
+        unseenQuestions.forEach(question -> question.getUsers().add(user));
+
+        questionRepository.saveAll(unseenQuestions);
+
+        return getQuestionsSetServiceModel("Random", unseenQuestions);
     }
 
 }
