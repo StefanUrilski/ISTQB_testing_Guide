@@ -4,11 +4,13 @@ import com.example.exam.domain.models.binding.TestAnswerBindingModel;
 import com.example.exam.domain.models.binding.TestBindingModel;
 import com.example.exam.domain.models.service.ResultQuestsServiceModel;
 import com.example.exam.domain.models.service.question.QuestionInfoServiceModel;
+import com.example.exam.domain.models.service.question.QuestionsSetServiceModel;
 import com.example.exam.domain.models.view.ResultQuestsViewModel;
 import com.example.exam.domain.models.view.TestAnswerViewModel;
 import com.example.exam.domain.models.view.question.QuestionInfoViewModel;
 import com.example.exam.domain.models.view.question.QuestionFilesViewModel;
 import com.example.exam.domain.models.view.question.QuestionsSetViewModel;
+import com.example.exam.errors.AllQuestionVisitedException;
 import com.example.exam.service.QuestionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,10 +91,14 @@ public class QuestionController extends BaseController {
     @GetMapping("/random")
     @PreAuthorize("hasRole('ROLE_USER') && !hasRole('ROLE_ROOT')")
     public ModelAndView getQuestionsSetResults(Principal principal) {
-        QuestionsSetViewModel questions = modelMapper.map(
-                questionService.getRandomQuestionByUser(principal.getName()),
-                QuestionsSetViewModel.class
-        );
+        QuestionsSetServiceModel randomQuestions;
+        try {
+            randomQuestions = questionService.getRandomQuestionByUser(principal.getName());
+        } catch (AllQuestionVisitedException ex) {
+            return  view("questions/no-random-questions");
+        }
+
+        QuestionsSetViewModel questions = modelMapper.map(randomQuestions, QuestionsSetViewModel.class);
 
         return view("questions/set-of-questions", "questions", questions);
     }
