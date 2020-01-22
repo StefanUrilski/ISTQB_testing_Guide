@@ -286,10 +286,12 @@ public class QuestionServiceImpl implements QuestionService {
                 })
                 .collect(Collectors.toList());
 
+        int score = (int) correctAnswers.stream().filter(TestAnswerServiceModel::isValid).count();
 
         ResultQuestsServiceModel result = new ResultQuestsServiceModel();
         result.setCorrectAnswers(correctAnswers);
         result.setTables(getAllFiguresAsServiceModel());
+        result.setScorePoints(score);
         return result;
     }
 
