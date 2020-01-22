@@ -68,7 +68,7 @@ public class QuestionController extends BaseController {
 
     @GetMapping("/set/{questionSetId}")
     @PreAuthorize("hasRole('ROLE_USER') && !hasRole('ROLE_ROOT')")
-    public ModelAndView getQuestionsSet(@PathVariable String questionSetId) {
+    public ModelAndView questionsSet(@PathVariable String questionSetId) {
         QuestionsSetViewModel questions = modelMapper.map(
             questionService.getQuestionsByQuestionSetId(questionSetId),
             QuestionsSetViewModel.class
@@ -79,7 +79,7 @@ public class QuestionController extends BaseController {
 
     @PostMapping("/set/exam")
     @PreAuthorize("hasRole('ROLE_USER') && !hasRole('ROLE_ROOT')")
-    public ModelAndView getQuestionsSetResults(@ModelAttribute TestBindingModel test) {
+    public ModelAndView questionsSetResults(@ModelAttribute TestBindingModel test) {
         ResultQuestsViewModel result = modelMapper.map(
                 questionService.checkAnswers(test),
                 ResultQuestsViewModel.class
@@ -90,7 +90,7 @@ public class QuestionController extends BaseController {
 
     @GetMapping("/random")
     @PreAuthorize("hasRole('ROLE_USER') && !hasRole('ROLE_ROOT')")
-    public ModelAndView getQuestionsSetResults(Principal principal) {
+    public ModelAndView randomQuestionsSet(Principal principal) {
         QuestionsSetServiceModel randomQuestions;
         try {
             randomQuestions = questionService.getRandomQuestionByUser(principal.getName());
@@ -101,5 +101,13 @@ public class QuestionController extends BaseController {
         QuestionsSetViewModel questions = modelMapper.map(randomQuestions, QuestionsSetViewModel.class);
 
         return view("questions/set-of-questions", "questions", questions);
+    }
+
+    @GetMapping("/startOver")
+    @PreAuthorize("hasRole('ROLE_USER') && !hasRole('ROLE_ROOT')")
+    public ModelAndView startOver(Principal principal) {
+        questionService.startOver(principal.getName());
+
+        return redirect("/questions/all");
     }
 }
