@@ -13,7 +13,6 @@ public class Question extends BaseEntity {
     private char correctAnswer;
     private String explanation;
     private String questionSet;
-    private Set<User> users;
 
     public Question() {
         answers = new LinkedHashSet<>();
@@ -62,17 +61,5 @@ public class Question extends BaseEntity {
 
     public void setQuestionSet(String questionSet) {
         this.questionSet = questionSet;
-    }
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "questions_users",
-            joinColumns = @JoinColumn(name = "question_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 }
