@@ -1,0 +1,832 @@
+Which of the following sets of test techniques contains only the examples of blackbox
+techniques?
+(A) Statement coverage testing, state transition testing, error guessing
+(B) Use-case based testing, decision table testing, boundary value analysis
+(C) Exploratory testing, equivalence partitioning testing, system testing
+(D) Integration testing, acceptance testing, defect-based testing
+Correct answer: B
+Foundation Level Syllabus describes five categories of black-box techniques.
+These are:
+  • Equivalence partitioning
+  • Boundary value analysis
+  • Decision tables
+  • State transition testing
+  • Use-case based testing
+Answer B contains only black-box techniques, hence is correct.
+A is incorrect, because statement coverage is an example of a white-box testing
+technique and error guessing is an example of an experience-based technique.
+C is incorrect, because exploratory testing is an example of an experience-based
+technique, and system testing is a test level, not a type of test technique.
+D is incorrect, because both integration and acceptance testing are test levels, not
+types of the test techniques. Defect-based testing is an example of an experiencebased
+technique.
+Question 2.
+You test a function that takes two positive integers: width and height as an input and
+checks if it is possible to print on a canvas these two dimensions. Both width and
+height cannot be too small, but the canvas area, calculated as the product of width
+and height, cannot be too large. The function follows the process described in a
+figure {Fig. 8.1}.
+Assume that each test case is a triple {width, height, expected result}, where
+“expected result” can be accepted or rejected. Which of the following is the minimal
+set of test cases that covers boundary values for width, height, and area and all of
+them have correct expected results defined? Assume you follow the 2-point version
+of the boundary value analysis.
+(A) {4, 9, reject}, {5, 4, reject}, {7, 5, accept}, {6, 6, reject}.
+(B) {4, 9, reject}, {6, 4, accept}, {5, 5, accept}, {7, 5, accept}, {6, 6, reject}.
+(C) {4, 9, reject}, {5, 4, reject}, {5, 5, accept}, {6, 6, reject}.
+(D) {4, 9, accept}, {7, 5, accept}, {5, 4, reject}.
+Correct answer: A
+We need to test the following six boundary values:
+  • For the width: 4, 5
+  • For the height: 4, 5
+  • For the area: 35, 36
+  A is correct, because:
+  • The test (4, 9, reject) covers the boundary value 4 for height.
+  • The test (5, 4, reject) covers the boundary values: 5 for height and 4 for width.
+  • The test (7, 5, accept) covers the boundary values: 5 for width and 35 for area.
+  • The test (6, 6, reject) covers the boundary value 36 for area.
+Answer B is incorrect, because, as we saw in A, 4 tests are enough. Test (5, 5,
+accept) is redundant.
+Answer C is incorrect, because a test that covers boundary value 35 for area is
+missing.
+Answer D seems to be correct, because we have all boundary values in these three
+tests: (4, 9, accept) covers boundary value 4 for height and 36 for area, (7, 5, accept)
+covers boundary value 5 for width and 35 for area and (5, 4, reject) covers boundary
+values 5 for height and 4 for width. However, there is a problem with test (4, 9,
+accept)—when height = 4, the expected result, according to the model, should be
+“reject.” So we finish the process immediately and we are not able to achieve the
+decision point “decision < 35.”
+Question 3.
+Why are the validation activities examples of a positive role of testing?
+(A) They help to detect defects in the early phases of the software life cycle.
+(B) They help to prevent ambiguities in requirements.
+(C) They help to reduce the risk of logic or calculation errors within the code and
+test cases, because they enforce testers to work closely with developers.
+(D) They help to ensure that the system meets the client’s expectations.
+Correct answer: D
+All four answers are good examples of why testing contributes to quality, but only
+answer D is related directly with validation.
+A is incorrect, because validation is usually performed in the later phases and also
+cares more about the business quality (user’s needs) than technical quality (lack of
+defects).
+B is incorrect, because validation is usually performed in the later phases, while
+requirement analysis is usually done very early in the project, even when no single
+line of code is written. Validation activities are usually done for the working
+software.
+C is incorrect, because it refers more to verification than validation activities.
+Question 4.
+From the following, choose the set of the iterative SDLC models.
+(A) Waterfall, Boehm spiral model, Rational Unified Process
+(B) Test Maturity Model, Rapid Application Development, V-model
+(C) Scrum, Kanban, Lean
+(D) Extreme Programming, Fundamental Test Process, Capability Maturity Model
+Correct answer: C
+Scrum, Kanban, Lean, and Extreme Programming are the examples of the
+iterative SDLC models (although, to be precise, Extreme Programming is more
+like a set of good practices rather than a well defined SDLC model). Hence, C is
+correct and A, B, D are incorrect.
+Rational Unified Process, Rapid Application Development, and Boehm Spiral
+Model are the examples of incremental SDLC models, in which requirements are
+implemented in a series of short development cycles, called increments. These
+models often use prototypes, which are then evaluated and guide the following
+development works.
+Waterfall and V-model are the examples of sequential SDLC models, where the
+development process follows a linear, sequential flow.
+Test Maturity Model and Capability Maturity Model are models for assessing and
+improving the organization maturity. These are not the SDLC models.
+Fundamental Test Process is an abstract framework describing the main, typical
+phases of any test process, so this is not a kind of a particular SDLC model.
+Question 5.
+A support in setting up adequate configuration management of testware for traceability
+is the responsibility of which project role?
+(A) Tester
+(B) Test automation engineer
+(C) Developer
+(D) Test manager
+Correct answer: D
+According to syllabus, a support in setting up the defect management system and
+adequate configuration management of testware is the responsibility of a test manager.
+Hence, D is correct and A, B, C are incorrect.
+Question 6.
+Confirmation by examination and through provision of objective evidence that
+specified requirements have been fulfilled is called:
+(A) Validation
+(B) Debugging
+(C) Verification
+(D) Root cause analysis
+Correct answer: C
+C is the glossary definition for “verification.”
+A is incorrect, because validation, although similar to verification, confirms that
+the requirements for a specific intended use or application have been fulfilled.
+Hence, validation is performed more from the business or client point of view.
+Verification, on the other hand, usually focuses on the technical aspects of the
+so-called internal quality.
+B is incorrect, because debugging is a process of finding, analyzing, and removing
+the causes of failures in software. Hence, the trigger for the debugging process is
+a problem, not the intention of verifying that everything is OK.
+D is incorrect, because root cause analysis identifies the root causes of defects.
+Hence, similar to B, it is triggered by problems, not the intention of verifying
+something.
+Question 7.
+Table 8.1 presents the set of regression test cases available to you. Recently, the
+software under test was modified to make some performance improvements. Now
+your manager wants you to perform the full regression testing restricted to the
+performance area only, following a descending priority order for the corresponding
+tests.
+Which test case should be executed as the last one?
+(A) TC4
+(B) TC6
+(C) TC3
+(D) TC7
+Correct answer: C
+We need to run only the performance tests—these are TC2, TC3, and TC6. TC2
+and TC3 have high priority, but they depend on TC1, TC7, and TC6. But TC1
+depends on TC7 and TC6—on TC5, which in turn depends on TC1. See Fig. 14.1—
+the performance test cases are denoted by gray rectangles and the arrows show the
+dependencies between the test cases. Notice that we do not need to run TC4, as it is
+not performance related.
+So the final order of the test cases is as follows: TC7, TC1, TC2, TC5, TC6, and
+TC3. The final test case is TC3. Hence, C is correct, and A, B, D are incorrect.
+Question 8.
+Which role is responsible for leading a review?
+(A) Manager
+(B) Facilitator
+(C) Author
+(D) Reviewer
+Correct answer: B
+A facilitator (also called moderator) is responsible for ensuring the effective
+running of review meetings. Hence, B is correct.
+A is incorrect, as the management is responsible for review planning; decides on
+the execution of reviews; assigns staff, budget, and time; monitors ongoing costeffectiveness;
+and executes control decisions in the event of inadequate outcomes.
+C is incorrect, as the author’s responsibility may be to present/comment her work
+during the review meeting (if such a meeting is planned), but author does not have
+any moderating role.
+D is incorrect, as the reviewer reviews the work product, but does not moderate
+the process.
+Question 9.
+What is the minimal number of columns for the collapsed version of the full decision
+table with eight columns presented in Table 8.2?
+(A) 4
+(B) 5
+(C) 6
+(D) 7
+Correct answer: A
+If Registered user = F, then Action 1 holds and Action 2 and 3 do not hold, no
+matter what are the logical values of Conditions 2 and 3. Hence, first four columns
+can be collapsed into one. Also, columns 5 and 7 can be collapsed, because if only
+Condition 1 holds and Condition 3 does not hold, no matter what is the logical value
+of Condition 2, no action holds. We are left with columns 6 and 8, which cannot be
+collapsed, as they have different combinations of actions.
+  The collapsed table is presented in Table 14.1.
+  Recall that in some cases, there is more than one possibility to collapse a table.
+How can we know that 4 columns in our table is really the minimal possible number?
+Notice that we cannot collapse this table to less than 4 columns, because we have
+4 different combinations of actions. Hence, 4 is the minimal number of columns in
+the collapsed table and A is the correct answer.
+Question 10.
+Which of the following tool types can be used during the dynamic tests execution
+phase?
+A) Test data preparation tool
+B) Coverage measurement tool
+C) Configuration management tool
+D) Modeling tool
+Correct answer: B
+One of the important things done during the test execution is measuring the
+coverage achieved by the tests. This is a typical approach especially in case of whitebox
+unit (component) testing. Hence, B is correct.
+A is incorrect, because test data preparation tools are used for test specification,
+before the test execution phase.
+C is incorrect, because configuration management area is not part of the test
+execution phase.
+D is incorrect, because modeling tools support static testing and we perform
+dynamic testing.
+Question 11.
+A tester performed a code analysis and noticed that the cyclomatic complexity of a
+certain component is very high. This information was passed to developers, and they
+refactored this code, making it more readable and more testable. This example shows
+a benefit from what?
+(A) Dynamic testing
+(B) Static technique
+(C) Test management
+(D) Using formal test technique
+Correct answer: B
+This is a classic example of a benefit from static technique (in this case, static
+analysis). Hence, B is correct.
+A is incorrect, because we did not test the running software, we have just
+analyzed its properties.
+C is incorrect, because measuring cyclomatic complexity is not a managerial
+activity.
+D is incorrect, because static analysis is not an example of a formal test technique.
+Such technique can be equivalence partitioning, boundary value analysis, state
+transition testing, decision tables, use-case-based testing, etc.
+Question 12.
+A system you are currently testing calculates a discount for the clients that do
+shopping through an e-commerce system. A discount is valid for one shopping
+session. There are three types of clients:
+  • New {he does shopping in our system for the first time}—receives 20% discount
+  • Typical {he is not a new client, but the total amount he spent in our shop does not
+	exceed $5000}—receives 5% discount
+  • Regular {he is not a new client and the total amount he spent in our shop is at least
+	$5000}—receives 10% discount
+Each test case is a single shopping session. You have the following test cases
+prepared for execution:
+ TC1—a new client who will spend $1
+ TC2—a new client who will spend $5500
+ TC3—a typical client who has already spent $1000 and now will spend $3999
+ TC4—a typical client who has already spent $4500 and now will spend $1000
+ TC5—a regular client who has already spent $5000 and now will spend $1
+ TC6—a regular client who has already spent $9000 and now will spend $5000
+Which set of test cases is the minimal set that covers the equivalence partitions for
+a discount type?
+(A) TC1, TC2, TC3, TC4, TC5, TC6
+(B) TC1, TC2, TC4
+(C) TC1, TC3, TC4, TC5
+(D) TC2, TC3, TC4
+Correct answer: D
+The considered variable—discount—has only three possible values: 5%, 10%,
+and 20%. Each of them is a separate equivalence class. Hence, we need three tests,
+one for receiving each discount type. Hence, D is correct, as TC2 refers to 20%
+discount, TC3—to 5% discount, and TC4—to 10% discount. Notice that in TC4,
+before the last shopping, the client was typical, but the total amount spent after the
+last shopping exceeds 5000, so a client receives 10% discount and his status is
+updated to “regular.”
+A is incorrect, because three tests are enough.
+B is incorrect, because TC1 ad TC2 cover 20% discount and TC4 covers 10%
+discount. Two tests cover the same equivalence class, and a test that would cover 5%
+discount is missing.
+C is incorrect, because three tests are enough.
+Question 13.
+Which of the following is not an example of a test objective?
+(A) Correcting the defect found
+(B) Preventing from defect occurrence
+(C) Gaining confidence about the system quality
+(D) Providing to stakeholders an information about system quality
+Correct answer: A
+Defect correction is the objective of debugging, not testing. All other objectives
+(B, C, D) are the typical testing objectives.
+Question 14.
+Choose the factor influencing the test effort and related to the product characteristics.
+(A) Time pressure
+(B) Requirements for usability
+(C) Maturity of the organization
+(D) Skills of the people involved
+Correct answer: B
+Per syllabus. The requirements for quality characteristics (like usability, performance,
+security, reliability, etc.) are the product characteristics that influence the test
+effort. A, C, and D are the examples of development process or people
+characteristics.
+Question 15.
+Unreachable code is an example of a defect that:
+(A) Will always be detected in testing
+(B) Will never be detected in testing
+(C) May result in a failure
+(D) Will never result in a failure
+Correct answer: D
+An unreachable code is definitely a defect. However, as it will never be reached, it
+will never result in a failure. Hence, D is correct.
+A is incorrect, because one of the universal testing rules says that it is impossible
+to detect all the defects—this may be an example of such defect.
+B is incorrect, because unreachable code can be detected in a review.
+C is incorrect from the logical consequences of the correctness of D.
+Question 16.
+You are testing a book prolong process in a university library defined as the
+following procedure {executable statements are numbered}:
+1 INPUT UserType {possible values: Student, Professor}
+2 INPUT ActualBorrowTime {possible values: positive integers}
+3 IF {ActualBorrowTime > 60} THEN
+4 	Do not allow to prolong
+  ELSE
+5 	IF {ActualBorrowTime > 30} THEN
+6 		IF {UserType == Professor} THEN
+7 			Allow to prolong
+		ELSE
+8 			Do not allow to prolong
+		END IF
+	ELSE
+9 		Allow to prolong
+	END IF
+  END IF
+*all '{' and '}' to be read as simple open and close bracket.
+
+You have two test cases:
+{UserType = Professor, ActualBorrowTime = 20}
+{UserType = Professor, ActualBorrowTime = 45}
+What statement coverage is achieved by these two tests?
+(A) 3/9
+(B) 5/9
+(C) 8/9
+(D) 7/9
+Correct answer: D
+Test 1 executes lines 1, 2, 3 (False), 5 (False), 9.
+Test 2 executes lines 1, 2, 3 (False), 5 (True), 6 (True), 7.
+Altogether these two tests execute lines 1, 2, 3, 5, 6, 7, 9. This is 7 out of 9 lines,
+so the achieved statement coverage is 7/9. Hence, D is correct and A, B, C are
+incorrect.
+Question 17.
+A methodical approach that uses a list of possible mistakes, defects, and failures, and
+designs tests that will expose those failures, called “fault attack,” is:
+(A) A form of exploratory testing
+(B) A structured approach to the error guessing technique
+(C) A form of checklist-based testing technique
+(D) A structured approach to the walkthrough
+Correct answer: B
+Fault attack is a structured approach to error guessing technique (per syllabus). In
+a fault attack, a tester generates a list of possible defects and designs tests to “attack”
+these defects, that is, to enforce a failure caused by them. Hence, B is correct and A,
+C, D are incorrect.
+Question 18.
+Which of the following is the example of the trigger for the maintenance testing?
+(A) Retirement of a system
+(B) Testing the correctness of a data migration process
+(C) A necessity of performing the risk analysis
+(D) Implementing patches to newly discovered defects and vulnerabilities
+Correct answer: A
+Retirement of a system is a trigger for maintenance testing: it may result, for
+example, in performing the testing of data migration or testing the restore/retrieve
+procedures. B is incorrect, because this is the effect of the trigger, not the trigger
+itself. C is incorrect, because the necessity of performing the risk analysis has
+nothing to do with maintenance testing. D is incorrect, because implementing the
+patches is the effect of a modification, which is one of the triggers for maintenance
+testing.
+Question 19.
+Consider the following piece of code:
+INPUT x, y
+IF {x > 0} THEN
+	y := y + 1
+END IF
+IF {y > 0} THEN
+	x := x – 1
+END IF
+*all '{' and '}' to be read as simple open and close bracket.
+
+What is the minimal number of test cases for achieving decision coverage?
+(A) 1
+(B) 4
+(C) 2
+(D) 3
+Correct answer: C
+To achieve decision coverage, we have to evaluate each decision outcome to
+FALSE and to TRUE. For input (x = 1, y = 1), both decisions in the code will be
+executed with TRUE outcome. For input (x = 0, y = 0), both decisions will be
+executed with FALSE outcome. So, two tests are enough. Hence, C is correct and A,
+B, D are incorrect.
+Question 20.
+Which of the following is an example of a model that may be used by the white-box
+testing on the integration level?
+(A) Call graph, which presents the relationships between subroutines in a program.
+(B) Control flow graph, which models all possible control flows through a component
+or system.
+(C) Tree-like menu structure, which presents all possible options that a user can
+choose from the application’s main menu.
+(D) White-box testing cannot be performed on the integration level, so there is no
+such a model.
+Correct answer: A
+White-box testing can be performed at all levels, and for each, it can use different
+models representing the software internal structure, for example,
+• Control flow graph or source code—on the component level testing
+• Call graphs—on the integration level testing
+• Business process models—on the system level testing
+• Menu structures—on the acceptance level testing
+Call graphs show the relationship between different functions, procedures, and
+subroutines and visualize how they invoke each other. Hence, A is correct.
+B is incorrect, because a control flow graph may be used on the component level
+testing, as it models only a single component, not an integration between two or
+more entities.
+C is incorrect, because a menu structure is suitable at the system testing level. It is
+far too general model to perform a white-box integration testing.
+D is incorrect, because white-box testing can be performed at all levels.
+Question 21.
+In order to implement effective monitoring and control, it is critical to:
+(A) Establish traceability between the test basis and the various test work products.
+(B) Understand where we are at any time in the project.
+(C) Provide the basis for relating testing work products to stakeholders in terms that
+they can understand.
+(D) Evaluate the test coverage against requirements.
+Correct answer: A
+A is correct per syllabus. B, C, and D are incorrect, as they are the results of
+having the effective monitoring and control, not the critical things that we have to do
+in order to achieve this effective monitoring and control.
+Question 22.
+Which of the following review types is not an example of an informal review?
+(A) Moderated code review
+(B) A technical conversation in the office’s kitchen during the break
+(C) Pair review
+(D) Perspective-based buddy check
+Correct answer: A
+Moderated review is an example of a walkthrough, technical review or inspection—
+not an informal review.
+B is incorrect, because the casual conversation is an example of an informal review.
+C and D are incorrect, because both pair review and buddy check are the
+examples of an informal review. The fact that the buddy check is perspectivebased
+does not change its informal nature.
+Question 23.
+During the risk analysis, the following product risk items were identified:
+Risk 1: Low testability of the component X because of its high cyclomatic
+complexity.
+Risk 2: Response time of the component Y may be too long.
+What are the most reasonable actions that you, as a tester, should implement
+during the testing phase regarding these two risks?
+(A) Thorough acceptance testing of X, usability testing of Y.
+(B) Component testing of Y, Integration testing of Y.
+(C) No action for X, nonfunctional testing of Y.
+(D) Inspection of X, performance testing of Y.
+Correct answer: D
+The actions we undertake should mitigate the risks. Hence, it is a good idea to
+perform an inspection of X to ensure that its structure will not be difficult to
+understand. Also, it is a good idea to conduct the performance testing of Y, as
+there is a risk of a slow response time.
+A is incorrect, because usability has nothing to do with performance. Also,
+acceptance testing is not a good idea for verifying the complexity of a component.
+B is incorrect, because integration testing will not verify the performance issues.
+Also, component testing will not calculate the cyclomatic complexity—some static
+analysis methods would be much better here.
+C is incorrect, because we should mitigate the risk related to X.
+Question 24.
+You perform a checklist-based review of a requirement specification. The checklist
+looks as follows:
+  Checklist for Requirements Specification Reviews
+	R1: Do any requirements conflict with or duplicate other requirements?
+	R2: Is each requirement uniquely and correctly identified?
+	R3: Are all requirements actually requirements, not design or implementation
+	solutions?
+  The requirement specification under review looks as follows:
+	Functional Requirement 1
+	ID: FR1
+	Title: Download mobile application
+	Description: A user should be able to download the mobile application through
+	an application store. The application should be free to download.
+	Functional Requirement 2
+	ID: FR3
+	Title: User registration
+	Description: Given that a user has downloaded the mobile application, the user
+	should be able to register through the mobile application. The user must
+	provide username, password, and e-mail address. The user data should be
+	kept in the MySQL relational database in a table “UserData” with columns
+	“user_id,” “username,” “password,” and “email,” where user_id is the
+	primary key.
+	Functional Requirement 3
+	ID: FR3
+	Title: User logging
+	Description: Given that a user is registered, the user should be able to log in to
+	the application with his/her username and password.
+Which statements from the checklist are violated and which are not?
+(A) R3 is violated. R1 and R2 are not violated.
+(B) R2 and R3 are violated. R1 is not violated.
+(C) R1, R2, and R3 are violated.
+(D) R1 and R2 are violated. R3 is not violated.
+Correct answer: B
+The second requirement has the same ID as the third one (ID FR3), so this
+violates the statement R2. Also, this requirement imposes a technical (implementation)
+solution on the way the user data is stored. This violates the statement R3. No
+requirement conflicts with or duplicates other requirements—hence, the statement
+R1 is not violated.
+Therefore, B is correct, and A, C, and D are incorrect.
+Question 25.
+A system state is described by a pair of numbers {First, Second}, where First and
+Second can be 0, 1, or 2. The initial state is {0, 0} and the final state is {2, 2}. There are
+two possible events in this system: FirstUp and SecondUp. An event FirstUp moves
+us form a state {First, Second} to a state {First+1, Second} and SecondUp moves us
+from {First, Second} to {First, Second+1}. If the number to be increased reached its
+maximal value, the corresponding event cannot occur.
+What is the minimal number of test cases to achieve state coverage and transition
+{0-switch} coverage in this machine?
+(A) 4 tests for state coverage; 4 tests for 0-switch coverage
+(B) 3 tests for state coverage; 4 tests for 0-switch coverage
+(C) 8 tests for state coverage; 12 tests for 0-switch coverage
+(D) 4 tests for state coverage; 8 tests for 0-switch coverage
+Correct answer: B
+The state machine that follows the rules described in the question is presented in
+Fig. 14.2. As states are pairs of numbers and each of these numbers can have one out
+of three values, the total number of states is equal to the number of combinations of
+these numbers, 3 x 3 = 9. There are two types of transitions: the ones labeled with
+event FirstUp moves us right, and the ones labeled with SecondUp moves us down.
+Hence, we cannot return to any previously visited state.
+To achieve the state coverage, notice that no two of states (2, 0), (0, 2) and (1, 1)
+can be present in one test case, as we cannot go from one of them to any other.
+Hence, we need at least 3 test cases to cover state coverage and this is indeed enough,
+for example,
+  TC1: (0, 0) ! (0, 1) ! (0, 2) ! (1, 2) ! (2, 2)
+  TC2: (0, 0) ! (0, 1) ! (1, 1) ! (2, 1) ! (2, 2)
+  TC3: (0, 0) ! (1, 0) ! (2, 0) ! (2, 1) ! (2, 2)
+To achieve 0-switch coverage notice, that none two of the four transitions: 
+(1, 0)!(2, 0), (1, 0)!(1, 1), (0, 1)!(1, 1) and (0, 1)!(0, 2) cannot be together in one
+test case. Therefore, we need at least 4 test cases and it is easy to see that the four test
+cases from Fig. 14.3 (denoted with bolded arrows) cover all transitions.
+Hence, B is correct and A, C and D are incorrect.
+Question 26.
+In white-box techniques the test conditions, test cases and test data are derived from
+the test basis that typically include:
+(A) Specification
+(B) Experience of a tester
+(C) Software architecture
+(D) Software requirements
+Correct answer: C
+In white-box techniques the test conditions, test cases and test data are derived
+from the test basis that typically include:
+  • Code
+  • Software architecture
+  • Detailed design
+  • Any other source of information regarding the structure of the software
+Hence, C is correct.
+A and D are incorrect—these are the typical test basis items from which the test
+conditions, test cases, and test data are derived in the black-box techniques.
+B is incorrect—this is true for the experience-based test techniques.
+Question 27.
+You test a function isLeapYear, which takes a positive integer X as input and returns
+TRUE if X is a leap year or FALSE otherwise. The specification defines the leap year
+in the following manner: “A year is a leap year if it is divisible by 4 with exception of
+begin divisible by 100 and not divisible by 400.” For example:
+  • 2003 is not a leap year, because it is not divisible by 4.
+  • 2004 is a leap year, because it is divisible by 4 and not divisible by 100.
+  • 2100 is not a leap year, because it is divisible by 4 and 100, but not by 400.
+  • 2400 is a leap year, because it is divisible by 4, 100, and 400.
+You want to apply equivalence partitioning for the isLeapYear output to check if
+the isLeapYear function works correctly. Which set of test cases gives you the 50%
+coverage?
+(A) 2003, 2004
+(B) 2003
+(C) 2003, 2100
+(D) 2004, 2400
+Correct answer: B
+The set of years is divided into two groups: leap years and non-leap years. Hence,
+to achieve 50% coverage we need only one test case. In fact, any valid input will be
+OK, so B is correct. Notice that we are not interested here in different “types” of leap
+or non-leap years. Each leap year falls into the same equivalence class, as well as
+each non-leap year falls into the same equivalence class.
+A is not correct, because it achieves 100% coverage.
+C and D are incorrect, because in each of these cases we obtain 50% coverage but
+these are not the smallest possible sets.
+Question 28.
+What is the difference between static and dynamic techniques, with respect to their
+objectives?
+(A) Static techniques directly detect defects, while dynamic techniques directly
+detect failures.
+(B) Static techniques are usually applied at the early SDLC phases, while dynamic
+techniques at the later phases.
+(C) There is no difference, because they both try to detect defects as early as
+possible.
+(D) Static techniques require programming skills, while dynamic techniques don’t.
+Correct answer: C
+Static and dynamic techniques have the same objective (see also Sect. 1.1.1):
+identifying defects as early as possible. Hence, regarding the objective, there is no
+difference between them.
+A is incorrect, because—although the sentence is true—it does not differentiate
+these approach regarding their goal. Notice that dynamic techniques directly detect
+failures, but indirectly—by analyzing these failures—they find defects.
+B is incorrect, because it is not true—for example, reviews can be done in late
+phases, while dynamic testing can start during the implementation phase.
+D is incorrect, because first it doesn’t seem to be true, and second—this is not the
+answer to the question, in which we are asked about the differences regarding the
+objectives, not skills required.
+Question 29.
+You executed a test script which has passed. During the later phases, it turned out,
+however, that the expected result was different, so the test should fail. This is an
+example of which of the tool-related risks?
+(A) Over-reliance on the tool
+(B) Unrealistic expectations for the tool
+(C) Underestimating the effort required to maintain the test assets generated by the tool
+(D) Poor response from vendor for support, upgrades, and defect fixes
+Correct answer: A
+This is a typical example of the overconfidence in a tool: we assumed that the test
+result must be correct, but probably there is some defect in the test script. Hence, A is
+correct and B, C, D are incorrect.
+Question 30.
+Which of the following is an example of a reactive test strategy?
+(A) Exploratory testing
+(B) Risk identification
+(C) Requirements-based testing
+(D) Fault attacks
+Correct answer: A
+In the reactive test strategy, testing is more reactive to events than preplanned, and
+tests are designed and may immediately be executed in response to knowledge
+gained from prior test results. An example of this strategy type is the exploratory
+testing. Hence, A is correct.
+B is incorrect, because risk identification is not a test strategy, but a part of the risk
+management process.
+C is incorrect, because requirements-based strategy is an example of the analytical
+approach, not the reactive one.
+D is incorrect, because fault attacks are an example of the methodical approach,
+not the reactive one.
+Question 31.
+Which of the following skills is the least important one in testing?
+(A) Programming skills
+(B) Curiosity
+(C) Attention to detail
+(D) Communication skills
+Correct answer: A
+Programming skills are not necessary to perform good tests. Manual testing is
+done without any code writing. Curiosity, attention to detail, and communication
+skills, on the other hand, are crucial for a tester. First two allow her to provide good,
+effective, and strong tests, which may find defects with high probability. Communication
+skills are crucial, because the tester is the “messenger of the bad news,” so
+she must be able to communicate the negative things in a neutral, professional way.
+Hence, A is correct and B, C, D are incorrect.
+Question 32.
+Which test estimation approach is the most recommended one and why?
+(A) There is no single best approach. The applicability and effectiveness of the
+approach depends on many factors.
+(B) Metrics-based approach is the best estimation approach, as it operates on data
+and facts, so it is always able to give us the accurate estimates.
+(C) Expert-based approach is the best estimation approach, because it takes advantage
+on the experts’ knowledge, experience, and intuition.
+(D) It is not recommended to use any estimation approach, because estimates are
+never accurate and hence, wrong estimation may lead the team to wrong
+conclusions, putting the project at risk.
+Correct answer: A
+There is no single best approach to estimation. Besides, a given estimation
+method may not be applicable under certain conditions. For example, if we do not
+have subject matter experts, the expert-based approach would not be a very good
+idea. On the other hand, if we do not have historical data and do not collect any
+metrics, metrics-based approach will be useless. Hence, A is correct.
+B and C are incorrect (see A).
+D is incorrect. It is always better to have some estimation—even not very
+accurate—than don’t have any. Estimations are useful in the rational and reasonable
+planning.
+Question 33.
+Connect the report types with their appropriate audience.
+Report types:
+  {a} Burndown chart
+  {b} Detailed information on defect types and trends in number of defects found and
+	  fixed
+  {c} Status summary of defects by priority
+Audience:
+  1} Development team
+  2} Test team
+  3} Project manager
+(A) 1a, 2c, 3b
+(B) 1a, 2b, 3c
+(C) 1b, 2a, 3c
+(D) 1c, 2b, 3a
+Correct answer: B
+The test reports should be tailored based on the report’s audience. Burndown
+chart is used in the agile development techniques by the whole development team.
+Detailed information on defect types and trends in number of defects found and fixed
+is a technical information needed by a test team to drive the testing activities. A
+general summary of the defect status is an information appropriate for the higher
+management. Hence, the most typical relation is 1a, 2b, 3c; so, B is correct and A, C,
+D are incorrect.
+Question 34.
+You are analyzing the following use case to design the test cases.
+  Use case UC-02-001: printing a ticket
+  Use case steps:
+  1. User logs in to the system.
+  2. System verifies in the database the User’s age. If age > 18, the use case
+  continues in Step 4.
+  3. System informs the User that a reduced ticket has been admitted because of
+  the User’s age.
+  4. System prints the ticket.
+  5. User logs out.
+  Exceptions: there are no exceptions in this use case.
+Which of the following answers describes best the conclusion you should draw
+from the analysis of this test case?
+(A) It is incorrect, as it has no exceptions.
+(B) It is incorrect, as it does not have one main scenario.
+(C) It is correct and 1 test is needed to cover this use case.
+(D) It is correct and 2 tests are needed to cover this use case.
+Correct answer: B
+A use case has only one main scenario. In this case, we have two main flows:
+  • Step 1, Step 2, Step 3, Step 4, Step 5
+  • Step 1, Step 2, Step 4, Step 5
+We also know that in this use case, there are no exceptions. Hence, the use case is
+incorrectly designed. It should be split into two use cases: printing a reduced ticket
+(for users with age < 18) and printing a normal ticket (for users with age >= 18).
+Hence, B is correct.
+A is incorrect, because a use case doesn’t necessarily need to have exceptions.
+C and D are incorrect, because B is correct.
+Question 35.
+You want to perform an impact analysis to estimate the effort needed to modify the
+test suite after some requirements have been changed. Choose the reason why this
+impact analysis may be difficult.
+(A) There is no traceability from test cases back to requirements.
+(B) We have no information about risks and their impact related to these
+requirements.
+(C) Testers lack programming skills.
+(D) There is no time for modifying test cases.
+Correct answer: A
+In order to perform an impact analysis about the effort required to modify the test
+cases, we need to know which test cases are related to the requirements that have
+changed. So, we need a traceability between these two types of artifacts. Hence, A is
+correct.
+B is incorrect, because risk does not influence the test case modification effort.
+Besides, from the scenario, we know nothing about the risk and its role in this
+process.
+C is incorrect. It is true that to modify the automated tests we need to have
+programming skills and this factor impacts the effort, but we don’t know if tests are
+automated. They may be manual, and hence programming skills are irrelevant.
+D is incorrect. The fact that there are some project constraints, which may not
+allow us to perform some actions, has nothing in common with the possibility to
+estimate the effort to perform them.
+Question 36.
+Black-box testing is mainly performed for two types of testing. Which ones?
+(A) Functional and structural testing
+(B) Functional and nonfunctional testing
+(C) System and nonfunctional testing
+(D) System and acceptance testing
+Correct answer: B
+Black-box testing is based on the specification external to the system. Hence (and
+according to syllabus, cf. Sect. 2.3.1) the typical black-box test types are functional
+and nonfunctional testing. Structural testing is based on the knowledge about the
+internal structure of the system, so this is a white-box testing. System and acceptance
+testing are the test levels, not test types. Hence, B is correct and A, C, D are incorrect.
+Question 37.
+You work as a tester in a project that follows V-model. You are currently in the
+requirement phase and, during the requirement review, you notice that two requirements
+contradict each other. You were asked to write a defect report about this
+finding. What would be the reason for doing that?
+(A) There is no reason, as it makes no sense to write a defect report in the initial
+project phase.
+(B) To provide architects feedback about the problem to enable its correction.
+(C) To provide ideas for test process improvement.
+(D) To provide developers feedback about the problem to enable its isolation.
+Correct answer: B
+There are different objectives of writing defect reports. According to syllabus
+these are:
+  • Provide developers and other parties with information about any adverse event
+	that occurred, to enable them to identify specific effects, to isolate the problem
+	with a minimal reproducing test, and to correct the potential defects, as needed or
+	to otherwise resolve the problem.
+  • Provide test managers a means of tracking the quality of the system under test and
+	the impact on the testing.
+  • Provide ideas for development and test process improvement.
+As we raise a bug in the requirements, the reason is to inform about the problem
+people responsible for this area, who will be fixing it. We are in the requirement
+phase and the bug is related to the requirements. Hence, the natural recipient of your
+report should be an architect, who will fix the problem. Therefore, B is correct.
+A is incorrect, because, according to syllabus, defects may be reported during
+coding, static analysis, reviews, dynamic testing, or use of a software product. This
+makes sense, because raising defects is one of the fundamental means through which
+the tester has to communicate problems to other stakeholders. Since testing should
+cover every single aspect of the product development, defect reports should be used
+throughout the whole life cycle.
+C is incorrect, because the issue is related to a concrete bug in the requirements,
+not to some high-level issues which—when solved—could improve the process.
+D is incorrect, because developers will not be fixing this bug. It is not a bug in the
+code, but a bug in the requirements. The person responsible for that is an architect,
+not a developer.
+Question 38.
+After test execution, it turned out that one test is implemented incorrectly. This test
+returned to the implementation phase. During the re-implementation, it turned out
+that it is not only incorrectly implemented, but also incorrectly designed. It turned
+back to the design phase, where it was corrected, and then implemented and
+executed once again.
+What can we say about this situation from the testing process point of view?
+(A) This situation is impossible, because the wrong design should be detected in the
+implementation phase, not in the execution phase, as the implementation phase
+precedes the execution phase.
+(B) This situation is impossible, because we cannot go back from execution phase to
+earlier phases, as the phases in the testing process follow the sequential order.
+(C) This situation is possible, because prior to designing the test first time, we had to
+perform the analysis phase so that we were able to derive this test from the test
+basis.
+(D) This situation is possible, because the process phases are not sequential and we
+can go back from one phase to another.
+Correct answer: D
+The phases of the test process are not sequential and we can go back and forth
+from one phase to another, skip some phases, return to another one many times, and
+so on. D is correct, because it directly refers to the situation described in the question
+(the order of test phases).
+A is incorrect, because the fact that a defect was introduced in some phase does
+not necessarily mean that this defect will be detected in the following phase. It may
+be detected later, or even never be detected.
+B is incorrect, because the test process is not sequential and we can move
+practically from any phase to any other.
+C is incorrect, because—although the sentence may be true itself—it does not
+answer the question. It does not refer to the situation in which we “move back” in the
+testing phases.
+Question 39.
+Pareto rule says that a small number of causes are responsible for the major part of
+the effects. This rule is a basis of which testing principle?
+(A) Defect clustering
+(B) Early testing
+(C) Pesticide paradox
+(D) Exhaustive testing is impossible
+Correct answer: A
+Applying the Pareto rule to defect distribution we can deduce that a small
+number of components contain a major part of defects. Hence, A is correct and B,
+C, D are incorrect.
+Question 40.
+Which of the following configuration management activities is most important from
+a testing point of view?
+(A) Ensuring that all test cases are version controlled and related to development
+items
+(B) Ensuring that all testware are collected in a single repository
+(C) Ensuring that the repository contains only the newest version of all items of
+testware
+(D) Ensuring that all software configurations were tested
+Correct answer: A
+Configuration management helps to uniquely identify and to reproduce the tested
+item, test documents, the tests and the test harnesses. It allows us to reconstruct the
+test object and the tests run against this object. According to the syllabus, “The
+purpose of configuration management is to establish and maintain the integrity of the
+component or system, the testware, and their relationships to one another through the
+project and product life cycle.” Hence, A is correct.
+B is incorrect, because it is not necessary that all configuration management data
+is gathered in one place. The repository may be distributed.
+C is incorrect, because configuration management ensures that all items of
+testware are version controlled. There may be a need to reconstruct some old
+software, because a client that uses this old version raised a bug and we need to
+analyze it on this old version of software.
+D is incorrect, because it is not the role of configuration management to ensure
+that something was tested. Besides, testing all software configurations may be
+impossible.
