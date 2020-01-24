@@ -1,5 +1,5 @@
 <th:block>
-    <div class="jumbotron mt-4 ml-3 mr-3 min-height">
+    <div class="jumbotron ml-3 mr-3 min-height">
 
         <th:block sec:authorize="hasRole('ROLE_ROOT')">
             <h1 class="text-lg-center font-weight-bold" th:text="|Hello, ${#authentication.getName()}!|"></h1>
@@ -8,19 +8,21 @@
             <h1 class="text-lg-center font-weight-bold" th:text="|Welcome ${#authentication.getName()}!|"></h1>
         </th:block>
 
-        <h3 class="pt-2">
+        <h2 class="ml-5 pl-5">
             This site is based on the book - Adam Roman - A Study Guide to the ISTQB&reg;
+            <br/>
             Foundation Level 2018 Syllabus 2018 Springer International Publishing 1.
             <br/>
             <br/>
             It contains all questions, answers and explanation.
             <br/>
             <br/>
-            The application has "random questions" option, that remembers witch random question
-            you have seen and give you, every time a new set of questions.
+            The application has "random questions" option, that remembers witch random
+            <br/>
+            question you have seen and give you, every time a new set of questions.
             <br/>
             <br/>
-            Good luck to all users.
-        </h3>
+            <strong>It has a little delay (15-20 sec.) caused by DB connection.</strong> Good luck to all users.
+        </h2>
     </div>
 </th:block>
