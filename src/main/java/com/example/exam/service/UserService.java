@@ -9,5 +9,7 @@ public interface UserService extends UserDetailsService {
 
     UserServiceModel getUserByName(String name);
 
-    UserServiceModel getUserById(String id);
+    void updateVisitedQuestions(UserServiceModel userServiceModel, String visitedQuestions);
+
+    void updateUser(String username);
 }

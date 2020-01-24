@@ -1,7 +1,5 @@
 package com.example.exam.domain.models.service;
 
-import com.example.exam.domain.models.service.question.QuestionServiceModel;
-
 import java.util.Set;
 
 public class UserServiceModel {
@@ -10,7 +8,7 @@ public class UserServiceModel {
     private String userName;
     private String password;
     private Set<UserRoleServiceModel> authorities;
-    private Set<QuestionServiceModel> questions;
+    private Set<Long> visitedQuestions;
 
     public String getId() {
         return id;
@@ -44,11 +42,11 @@ public class UserServiceModel {
         this.authorities = authorities;
     }
 
-    public Set<QuestionServiceModel> getQuestions() {
-        return questions;
+    public Set<Long> getVisitedQuestions() {
+        return visitedQuestions;
     }
 
-    public void setQuestions(Set<QuestionServiceModel> questions) {
-        this.questions = questions;
+    public void setVisitedQuestions(Set<Long> visitedQuestions) {
+        this.visitedQuestions = visitedQuestions;
     }
 }

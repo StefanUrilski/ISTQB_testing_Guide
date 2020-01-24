@@ -3,7 +3,6 @@ package com.example.exam.service;
 import com.example.exam.domain.entities.User;
 import com.example.exam.domain.entities.UserRole;
 import com.example.exam.domain.models.service.UserServiceModel;
-import com.example.exam.errors.IdNotFoundException;
 import com.example.exam.errors.UserRegisterFailureException;
 import com.example.exam.repository.RoleRepository;
 import com.example.exam.repository.UserRepository;
@@ -14,7 +13,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.example.exam.common.Constants.*;
 
@@ -60,6 +62,28 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    private Set<Long> getVisitedQuestionsAsSet(String questions) {
+        if (questions == null || questions.isEmpty()) {
+            return new HashSet<>();
+        }
+
+        return Arrays.stream(questions.split(", "))
+                .map(Long::parseLong)
+                .collect(Collectors.toSet());
+    }
+
+    private String getVisitedQuestionsAsString(Set<Long> questions, String visitedQuestions) {
+        if (questions.isEmpty()) {
+            return visitedQuestions;
+        }
+
+        String newQuestions = questions.stream()
+                .map(question -> Long.toString(question))
+                .collect(Collectors.joining(", "));
+
+        return String.format("%s, %s", visitedQuestions, newQuestions);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String user) throws UsernameNotFoundException {
         UserDetails userDetails = userRepository.findByUsername(user).orElse(null);
@@ -95,17 +119,36 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException(WRONG_NON_EXISTENT_USER);
         }
 
-        return modelMapper.map(userEntity, UserServiceModel.class);
+        UserServiceModel userService = modelMapper.map(userEntity, UserServiceModel.class);
+        userService.setVisitedQuestions(getVisitedQuestionsAsSet(userEntity.getVisitedQuestions()));
+
+        return userService;
     }
 
     @Override
-    public UserServiceModel getUserById(String id) {
-        User userEntity = userRepository.findById(Long.valueOf(id)).orElse(null);
+    public void updateVisitedQuestions(UserServiceModel userServiceModel, String visitedQuestions) {
+        User user = modelMapper.map(userServiceModel, User.class);
 
-        if (userEntity == null) {
-            throw new IdNotFoundException(WRONG_NON_EXISTENT_ID);
+        if (user == null) {
+            throw new UsernameNotFoundException(WRONG_NON_EXISTENT_USER);
         }
 
-        return modelMapper.map(userEntity, UserServiceModel.class);
+        String visited = getVisitedQuestionsAsString(userServiceModel.getVisitedQuestions(), visitedQuestions);
+        user.setVisitedQuestions(visited);
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateUser(String username) {
+        User user = userRepository.findByUsername(username).orElse(null);
+
+        if (user == null) {
+            throw new UsernameNotFoundException(WRONG_NON_EXISTENT_USER);
+        }
+
+        user.setVisitedQuestions("");
+
+        userRepository.save(user);
     }
 }

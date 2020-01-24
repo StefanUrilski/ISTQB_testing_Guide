@@ -2,11 +2,11 @@ package com.example.exam.service;
 
 import com.example.exam.domain.entities.AddedFiles;
 import com.example.exam.domain.entities.Question;
-import com.example.exam.domain.entities.User;
 import com.example.exam.domain.models.binding.TestAnswerBindingModel;
 import com.example.exam.domain.models.binding.TestBindingModel;
 import com.example.exam.domain.models.service.ResultQuestsServiceModel;
 import com.example.exam.domain.models.service.TestAnswerServiceModel;
+import com.example.exam.domain.models.service.UserServiceModel;
 import com.example.exam.domain.models.service.question.*;
 import com.example.exam.errors.AllQuestionVisitedException;
 import com.example.exam.errors.FileAlreadyExistsException;
@@ -62,10 +62,6 @@ public class QuestionServiceImpl implements QuestionService {
         this.userService = userService;
         this.modelMapper = modelMapper;
         this.randomProvider = randomProvider;
-    }
-
-    private User getUserEntityByUserName(String username) {
-        return modelMapper.map(userService.getUserByName(username), User.class);
     }
 
     private double calcPercentage(int allQuestions, int userVisitedQuestionCount) {
@@ -169,18 +165,18 @@ public class QuestionServiceImpl implements QuestionService {
         return randomQuestions;
     }
 
-    private boolean containsUser(Set<User> users, User currUser) {
-        for (User user : users) {
-            if (user.getId() == currUser.getId()) {
+    private boolean containsQuestion(Long questionId, Set<Long> questions) {
+        for (Long userQuestionId : questions) {
+            if (userQuestionId.equals(questionId)) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean notContainUser(Set<User> users, User currUser) {
-        for (User user : users) {
-            if (user.getId() == currUser.getId()) {
+    private boolean notContainQuestion(Long questionId, Set<Long> questions) {
+        for (Long userQuestionId : questions) {
+            if (userQuestionId.equals(questionId)) {
                 return false;
             }
         }
@@ -220,13 +216,13 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionInfoServiceModel getQuestionsInfo(String username) {
-        User user = getUserEntityByUserName(username);
+        UserServiceModel user = userService.getUserByName(username);
         List<Question> allQuestions = questionRepository.findAll();
 
         if (allQuestions.size() == 0) return null;
 
         int userVisitedQuestionCount = (int) allQuestions.stream()
-                .filter(question -> containsUser(question.getUsers(), user))
+                .filter(question -> containsQuestion(question.getId(), user.getVisitedQuestions()))
                 .count();
 
         int allQuestionSetsNumber = (int) allQuestions.stream()
@@ -301,10 +297,10 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionsSetServiceModel getRandomQuestionByUser(String username) {
-        User user = getUserEntityByUserName(username);
+        UserServiceModel user = userService.getUserByName(username);
 
         List<Question> unseenQuestions = questionRepository.findAll().stream()
-                .filter(question -> notContainUser(question.getUsers(), user))
+                .filter(question -> notContainQuestion(question.getId(), user.getVisitedQuestions()))
                 .collect(Collectors.toList());
 
         if (unseenQuestions.size() < 10) {
@@ -314,27 +310,18 @@ public class QuestionServiceImpl implements QuestionService {
         if (unseenQuestions.size() != 10) {
             unseenQuestions = getTenRandomQuestions(unseenQuestions);
         }
+        String visitedQuestions = unseenQuestions.stream()
+                .map(question -> Long.toString(question.getId()))
+                .collect(Collectors.joining(", "));
 
-        unseenQuestions.forEach(question -> question.getUsers().add(user));
-
-        questionRepository.saveAll(unseenQuestions);
+        userService.updateVisitedQuestions(user, visitedQuestions);
 
         return getQuestionsSetServiceModel("Random", unseenQuestions);
     }
 
     @Override
     public void startOver(String username) {
-        User user = getUserEntityByUserName(username);
-        List<Question> questions = questionRepository.findAll().stream()
-                .peek(question -> {
-                    Set<User> users = question.getUsers().stream()
-                            .filter(u -> u.getId() != user.getId())
-                            .collect(Collectors.toSet());
-                    question.setUsers(users);
-                })
-                .collect(Collectors.toList());
-
-        questionRepository.saveAll(questions);
+        userService.updateUser(username);
     }
 }
 

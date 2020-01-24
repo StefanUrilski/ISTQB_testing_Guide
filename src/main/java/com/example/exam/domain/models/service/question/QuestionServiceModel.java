@@ -13,7 +13,6 @@ public class QuestionServiceModel {
     private char correctAnswer;
     private String explanation;
     private String questionSet;
-    private Set<UserServiceModel> users;
     private boolean valid;
 
     public long getId() {
@@ -62,14 +61,6 @@ public class QuestionServiceModel {
 
     public void setQuestionSet(String questionSet) {
         this.questionSet = questionSet;
-    }
-
-    public Set<UserServiceModel> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<UserServiceModel> users) {
-        this.users = users;
     }
 
     public boolean isValid() {
