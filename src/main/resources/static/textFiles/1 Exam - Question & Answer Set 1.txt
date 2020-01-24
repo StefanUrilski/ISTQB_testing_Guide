@@ -52,7 +52,7 @@ guarantees that in at least one of these test cases, the while loop was executed
 once?
 (A) A set of test cases achieved 50% decision coverage.
 (B) A set of test cases achieved 100% statement coverage.
-(C) One of these tests executes the code with NumberOfValues ¼ 0.
+(C) One of these tests executes the code with NumberOfValues = 0.
 (D) There are at least two test cases in the test suite.
 Correct answer: B
 100% statement coverage guarantees that every statement in the code will be
@@ -60,7 +60,7 @@ evaluated at least once. This means that, in particular, if our test suite achie
 statement coverage, there must be at least one test in which the instructions within
 the while loop were executed; hence, in this test, the loop was executed at least once.
 A is incorrect, because we may achieve 50% decision coverage with just one test
-with NumberOfValues ¼ 0. In this case, the decision in the while loop will be false
+with NumberOfValues = 0. In this case, the decision in the while loop will be false
 and the loop will not be executed.
 C is incorrect, because this test will not execute the loop and we don’t know what
 are the other tests.
@@ -106,9 +106,9 @@ number}. The final evaluation is based on the following rule:
 
 Let L be the number of points achieved by the student during the labs.
 Let E be the number of points achieved by the student during the exam.
-Final Result: ¼ L + E.
-If {FinalResult > 50}, then decision :¼ StudentPassed.
-else decision :¼ StudentFailed.
+Final Result: = L + E.
+If {FinalResult > 50}, then decision := StudentPassed.
+else decision := StudentFailed.
 
 You want to apply the equivalence partitioning technique to a FinalResult
 variable. Assume that each test is a pair {L, E}. Which set of test cases covers all
@@ -124,11 +124,11 @@ Hence, we have two valid equivalence classes for FinalResult:
 • class C1 that represents the sum of points for the “fail” result: {1, 2, . . ., 49, 50}
 • class C2 that represents the sum of points for the “pass” result: {51, 52, . . .,
 99, 100}
-Answer D gives us two values from two different classes: 50 ¼ 35 + 15 and
-60 ¼ 40 + 20. Hence, these two tests achieve 100% equivalence partition coverage.
-A is incorrect, because both 51 ¼ 1 + 50 and 100 ¼ 50 + 50 belong to C2.
-B is incorrect, because both 58 ¼ 39 + 19 and 51 ¼ 28 + 23 belong to C2.
-C is incorrect because both 50 ¼ 0 + 50 and 50 ¼ 50 + 0 belong to C1.
+Answer D gives us two values from two different classes: 50 = 35 + 15 and
+60 = 40 + 20. Hence, these two tests achieve 100% equivalence partition coverage.
+A is incorrect, because both 51 = 1 + 50 and 100 = 50 + 50 belong to C2.
+B is incorrect, because both 58 = 39 + 19 and 51 = 28 + 23 belong to C2.
+C is incorrect because both 50 = 0 + 50 and 50 = 50 + 0 belong to C1.
 Question 7.
 You work as a tester in a software house and you concurrently work on two projects.
 One of them is an internal tool for on-line room reservation, done within an agile life
@@ -161,7 +161,7 @@ Question 8.
 Figure 6.1 presents the set of test cases you want to execute. An arrow from a test
 case A to B indicates logical dependencies between these test cases: the execution of
 B is possible only after the execution of A. The numbers in parentheses represent the
-priorities of test cases {1 ¼ the highest, 5 ¼ the lowest}. In your strategy, you want to
+priorities of test cases {1 = the highest, 5 = the lowest}. In your strategy, you want to
 prioritize the execution sequence regarding the test priority.
 Which test case should be executed as the fifth one?
 (A) TC2
@@ -190,16 +190,16 @@ business rules for admitting a free bus ticket.
 Assume that a test consists of three Boolean values corresponding to three
 conditions. Which of the following tests demonstrates that the business rules
 described in the table are contradictory?
-(A) {member of parliament ¼ TRUE, disabled ¼ FALSE, student ¼ TRUE}
-(B) {member of parliament ¼ TRUE, disabled ¼ TRUE, student ¼ FALSE}
-(C) {member of parliament ¼ FALSE, disabled ¼ FALSE, student ¼ TRUE}
-(D) {member of parliament ¼ FALSE, disabled ¼ FALSE, student ¼ FALSE}
+(A) {member of parliament = TRUE, disabled = FALSE, student = TRUE}
+(B) {member of parliament = TRUE, disabled = TRUE, student = FALSE}
+(C) {member of parliament = FALSE, disabled = FALSE, student = TRUE}
+(D) {member of parliament = FALSE, disabled = FALSE, student = FALSE}
 Correct answer: A
 The requirements are contradictory if for one given combination of conditions,
 we can derive two different actions. In our case, two different actions are “Free
-ride ¼ TRUE” and “Free ride ¼ FALSE.” For “Free ride” to be FALSE, we need to
-have “Student ¼ TRUE.” For “Free ride” to be TRUE, we need to have either
-“Member of Parliament ¼ TRUE” or “Disabled ¼ TRUE.” Test A fulfils these
+ride = TRUE” and “Free ride = FALSE.” For “Free ride” to be FALSE, we need to
+have “Student = TRUE.” For “Free ride” to be TRUE, we need to have either
+“Member of Parliament = TRUE” or “Disabled = TRUE.” Test A fulfils these
 conditions—it fits into both T1 and T3. Notice that these two columns give contradictory
 actions.
 B is incorrect, because this situation fits only into columns T1 and T2, and both of
@@ -597,7 +597,7 @@ machine?
 Correct answer: A
 As we have 3 states (Initial, LoginPage, WelcomePage) and 4 transitions, there
 are 12 possible combinations (state, transition). Since 4 of them are correct (they are
-shown in the table), we have 12-4 ¼ 8 invalid transitions. Recall that an invalid
+shown in the table), we have 12-4 = 8 invalid transitions. Recall that an invalid
 transition is a transition not defined in the model. These are (represented as a pair
 (state, transition)):
 
