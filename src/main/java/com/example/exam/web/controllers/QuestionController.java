@@ -1,14 +1,11 @@
 package com.example.exam.web.controllers;
 
-import com.example.exam.domain.models.binding.TestAnswerBindingModel;
 import com.example.exam.domain.models.binding.TestBindingModel;
-import com.example.exam.domain.models.service.ResultQuestsServiceModel;
 import com.example.exam.domain.models.service.question.QuestionInfoServiceModel;
 import com.example.exam.domain.models.service.question.QuestionsSetServiceModel;
 import com.example.exam.domain.models.view.ResultQuestsViewModel;
-import com.example.exam.domain.models.view.TestAnswerViewModel;
-import com.example.exam.domain.models.view.question.QuestionInfoViewModel;
 import com.example.exam.domain.models.view.question.QuestionFilesViewModel;
+import com.example.exam.domain.models.view.question.QuestionInfoViewModel;
 import com.example.exam.domain.models.view.question.QuestionsSetViewModel;
 import com.example.exam.errors.AllQuestionVisitedException;
 import com.example.exam.service.QuestionService;
@@ -60,8 +57,7 @@ public class QuestionController extends BaseController {
             return view("questions/all-questions", "questions", null);
         }
 
-        QuestionInfoViewModel questions = modelMapper
-                .map(questionsInfo, QuestionInfoViewModel.class);
+        QuestionInfoViewModel questions = modelMapper.map(questionsInfo, QuestionInfoViewModel.class);
 
         return view("questions/all-questions", "questions", questions);
     }
