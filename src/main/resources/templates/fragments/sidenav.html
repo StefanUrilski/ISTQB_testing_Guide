@@ -1,0 +1,12 @@
+<th:block>
+    <div class="sidenav">
+        <th:block th:each="table : ${questions.tables}">
+            <div class="text-center">
+                <span th:text="${table.name}" class="text-center font-weight-bold"></span>
+            </div>
+            <div>
+                <img th:src="${table.url}" class="img-fluid rounded float-right mb-3" th:alt="${table.name}">
+            </div>
+        </th:block>
+    </div>
+</th:block>

@@ -1,10 +1,7 @@
 <th:block>
     <form class="form mx-auto" th:action="@{/questions/set/exam}" method="post">
-        <div class="sidenav">
-            <th:block th:each="table : ${questions.tables}">
-                <a th:href="@{table.url}" th:text="table.name"></a>
-            </th:block>
-        </div>
+
+        <th:block th:include="~{fragments/sidenav}"></th:block>
 
         <div class="main container justify-content-center bg-color mt-5" style="min-height: 481px">
             <h1 class="font-weight-bold pl-5 ml-5" th:text="|Question set ${questions.questionSetId}|"></h1>
@@ -16,7 +13,7 @@
                     <th:block th:each="setOfAnswers : ${item.answers}">
                         <label>
                             <input type="radio" th:name="|answerSymbol${iter.index}|" th:value="${setOfAnswers.symbol}"
-                                   th:text="| ${setOfAnswers.symbol}) ${setOfAnswers.description}|" aria-required="true">
+                                   th:text="| ${setOfAnswers.symbol}) ${setOfAnswers.description}|">
                         </label>
                         <br/>
                     </th:block>
@@ -25,7 +22,9 @@
                 </div>
             </th:block>
 
-            <button type="submit" class="btn btn-lg btn-success text-center mt-3 mb-3" style="margin-left:25rem">Finish</button>
+            <button type="submit" class="btn btn-lg btn-success text-center mt-3 mb-3" style="margin-left:25rem">
+                Finish
+            </button>
         </div>
     </form>
 </th:block>
