@@ -168,10 +168,10 @@ public class QuestionServiceImpl implements QuestionService {
         return questionSet;
     }
 
-    private List<Question> getTenRandomQuestions(List<Question> questions) {
+    private List<Question> getTenRandomQuestions(List<Question> questions, int count) {
         List<Question> randomQuestions = new ArrayList<>();
 
-        randomProvider.getTenUniqueRandomNumbers(questions.size())
+        randomProvider.getUniqueRandomNumbers(questions.size(), count)
                 .forEach(randomNumber -> randomQuestions.add(questions.get(randomNumber)));
 
         return randomQuestions;
@@ -195,19 +195,19 @@ public class QuestionServiceImpl implements QuestionService {
         return true;
     }
 
-    private List<Question> getRandomQuestionsByUser(String username, int questions) {
+    private List<Question> getRandomQuestionsByUser(String username, int questionsCount) {
         UserServiceModel user = userService.getUserByName(username);
 
         List<Question> unseenQuestions = questionRepository.findAll().stream()
                 .filter(question -> notContainQuestion(question.getId(), user.getVisitedQuestions()))
                 .collect(Collectors.toList());
 
-        if (unseenQuestions.size() < questions) {
+        if (unseenQuestions.size() < questionsCount) {
             throw new AllQuestionVisitedException();
         }
 
-        if (unseenQuestions.size() != questions) {
-            unseenQuestions = getTenRandomQuestions(unseenQuestions);
+        if (unseenQuestions.size() != questionsCount) {
+            unseenQuestions = getTenRandomQuestions(unseenQuestions, questionsCount);
         }
         String visitedQuestions = unseenQuestions.stream()
                 .map(question -> Long.toString(question.getId()))
