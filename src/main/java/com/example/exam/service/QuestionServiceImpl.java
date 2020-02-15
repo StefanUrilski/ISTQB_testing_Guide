@@ -2,7 +2,6 @@ package com.example.exam.service;
 
 import com.example.exam.domain.entities.AddedFiles;
 import com.example.exam.domain.entities.Question;
-import com.example.exam.domain.models.binding.TestAnswerBindingModel;
 import com.example.exam.domain.models.binding.TestBindingModel;
 import com.example.exam.domain.models.service.ResultQuestsServiceModel;
 import com.example.exam.domain.models.service.TestAnswerServiceModel;
@@ -22,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -118,19 +118,31 @@ public class QuestionServiceImpl implements QuestionService {
                 .collect(Collectors.toList());
     }
 
-    private List<TestAnswerBindingModel> getTestAnswers(TestBindingModel testAnswers) {
-        return new ArrayList<>() {{
-            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol0(), testAnswers.getQuestionId0()));
-            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol1(), testAnswers.getQuestionId1()));
-            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol2(), testAnswers.getQuestionId2()));
-            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol3(), testAnswers.getQuestionId3()));
-            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol4(), testAnswers.getQuestionId4()));
-            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol5(), testAnswers.getQuestionId5()));
-            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol6(), testAnswers.getQuestionId6()));
-            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol7(), testAnswers.getQuestionId7()));
-            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol8(), testAnswers.getQuestionId8()));
-            add(new TestAnswerBindingModel(testAnswers.getAnswerSymbol9(), testAnswers.getQuestionId9()));
-        }};
+    private Map<Long, Character> getTestAnswers(TestBindingModel testBindingModel) {
+        Map<Long, Character> testAnswers = new LinkedHashMap<>();
+        Field[] fields = testBindingModel.getClass().getDeclaredFields();
+
+        for (int i = 0; i < fields.length; i+=2) {
+            Field field1 = fields[i];
+            Field field2 = fields[i + 1];
+            field1.setAccessible(true);
+            field2.setAccessible(true);
+
+            Character answerSymbol = null;
+            Long questionId = null;
+            try {
+                answerSymbol = (char) field1.get(testBindingModel);
+                questionId = (Long) field2.get(testBindingModel);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+            if (questionId != null) {
+                testAnswers.put(questionId, answerSymbol);
+            }
+        }
+
+        return testAnswers;
     }
 
     private List<AnswerServiceModel> orderAnswers(List<AnswerServiceModel> answers) {
@@ -290,10 +302,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public ResultQuestsServiceModel checkAnswers(TestBindingModel testAnswers) {
-        Map<Long, Character> answers = new HashMap<>();
-
-        getTestAnswers(testAnswers)
-                .forEach(testAnswer -> answers.put(testAnswer.getQuestionId(), testAnswer.getAnswerSymbol()));
+        Map<Long, Character> answers = getTestAnswers(testAnswers);
 
         List<TestAnswerServiceModel> correctAnswers = questionRepository.findAll().stream()
                 .filter(question -> answers.get(question.getId()) != null)
