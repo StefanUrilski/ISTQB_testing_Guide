@@ -8,7 +8,7 @@ public class ResultQuestsServiceModel {
 
     private List<TestAnswerServiceModel> correctAnswers;
     private List<FigureServiceModel> tables;
-    private int scorePoints;
+    private String scorePoints;
 
     public List<TestAnswerServiceModel> getCorrectAnswers() {
         return correctAnswers;
@@ -26,11 +26,11 @@ public class ResultQuestsServiceModel {
         this.tables = tables;
     }
 
-    public int getScorePoints() {
+    public String getScorePoints() {
         return scorePoints;
     }
 
-    public void setScorePoints(int scorePoints) {
+    public void setScorePoints(String scorePoints) {
         this.scorePoints = scorePoints;
     }
 }

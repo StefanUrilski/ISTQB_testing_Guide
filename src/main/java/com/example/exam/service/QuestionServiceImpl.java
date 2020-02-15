@@ -313,7 +313,7 @@ public class QuestionServiceImpl implements QuestionService {
         ResultQuestsServiceModel result = new ResultQuestsServiceModel();
         result.setCorrectAnswers(correctAnswers);
         result.setTables(getAllFiguresAsServiceModel());
-        result.setScorePoints(score);
+        result.setScorePoints(String.format("%s out of %s", score, answers.size()));
         return result;
     }
 

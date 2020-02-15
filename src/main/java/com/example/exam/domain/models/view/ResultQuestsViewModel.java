@@ -8,7 +8,7 @@ public class ResultQuestsViewModel {
 
     private List<TestAnswerViewModel> correctAnswers;
     private List<FigureViewModel> tables;
-    private int scorePoints;
+    private String scorePoints;
 
     public List<TestAnswerViewModel> getCorrectAnswers() {
         return correctAnswers;
@@ -26,11 +26,11 @@ public class ResultQuestsViewModel {
         this.tables = tables;
     }
 
-    public int getScorePoints() {
+    public String getScorePoints() {
         return scorePoints;
     }
 
-    public void setScorePoints(int scorePoints) {
+    public void setScorePoints(String scorePoints) {
         this.scorePoints = scorePoints;
     }
 }
