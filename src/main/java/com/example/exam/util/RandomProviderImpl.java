@@ -8,10 +8,10 @@ import java.util.*;
 public class RandomProviderImpl implements RandomProvider {
 
     @Override
-    public Set<Integer> getTenUniqueRandomNumbers(int maxNumber) {
+    public Set<Integer> getUniqueRandomNumbers(int maxNumber, int count) {
         Set<Integer> randomNumbers = new HashSet<>();
 
-        while (randomNumbers.size() != 10) {
+        while (randomNumbers.size() != count) {
             randomNumbers.add(new Random().nextInt(maxNumber));
         }
 
