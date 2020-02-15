@@ -183,6 +183,28 @@ public class QuestionServiceImpl implements QuestionService {
         return true;
     }
 
+    private List<Question> getRandomQuestionsByUser(String username, int questions) {
+        UserServiceModel user = userService.getUserByName(username);
+
+        List<Question> unseenQuestions = questionRepository.findAll().stream()
+                .filter(question -> notContainQuestion(question.getId(), user.getVisitedQuestions()))
+                .collect(Collectors.toList());
+
+        if (unseenQuestions.size() < questions) {
+            throw new AllQuestionVisitedException();
+        }
+
+        if (unseenQuestions.size() != questions) {
+            unseenQuestions = getTenRandomQuestions(unseenQuestions);
+        }
+        String visitedQuestions = unseenQuestions.stream()
+                .map(question -> Long.toString(question.getId()))
+                .collect(Collectors.joining(", "));
+
+        userService.updateVisitedQuestions(user, visitedQuestions);
+        return unseenQuestions;
+    }
+
 
     @Override
     public void saveTextFileDataToDB(String fileName) {
@@ -296,25 +318,15 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionsSetServiceModel getRandomQuestionByUser(String username) {
-        UserServiceModel user = userService.getUserByName(username);
+    public QuestionsSetServiceModel getTenRandomQuestionByUser(String username) {
+        List<Question> unseenQuestions = getRandomQuestionsByUser(username, 10);
 
-        List<Question> unseenQuestions = questionRepository.findAll().stream()
-                .filter(question -> notContainQuestion(question.getId(), user.getVisitedQuestions()))
-                .collect(Collectors.toList());
+        return getQuestionsSetServiceModel("Random", unseenQuestions);
+    }
 
-        if (unseenQuestions.size() < 10) {
-            throw new AllQuestionVisitedException();
-        }
-
-        if (unseenQuestions.size() != 10) {
-            unseenQuestions = getTenRandomQuestions(unseenQuestions);
-        }
-        String visitedQuestions = unseenQuestions.stream()
-                .map(question -> Long.toString(question.getId()))
-                .collect(Collectors.joining(", "));
-
-        userService.updateVisitedQuestions(user, visitedQuestions);
+    @Override
+    public QuestionsSetServiceModel getFortyRandomQuestionByUser(String username) {
+        List<Question> unseenQuestions = getRandomQuestionsByUser(username, 40);
 
         return getQuestionsSetServiceModel("Random", unseenQuestions);
     }
