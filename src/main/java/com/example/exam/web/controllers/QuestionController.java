@@ -86,10 +86,25 @@ public class QuestionController extends BaseController {
 
     @GetMapping("/randomTen")
     @PreAuthorize("hasRole('ROLE_USER') && !hasRole('ROLE_ROOT')")
-    public ModelAndView randomQuestionsSet(Principal principal) {
+    public ModelAndView tenRandomQuestions(Principal principal) {
         QuestionsSetServiceModel randomQuestions;
         try {
-            randomQuestions = questionService.getRandomQuestionByUser(principal.getName());
+            randomQuestions = questionService.getTenRandomQuestionByUser(principal.getName());
+        } catch (AllQuestionVisitedException ex) {
+            return  view("questions/no-random-questions");
+        }
+
+        QuestionsSetViewModel questions = modelMapper.map(randomQuestions, QuestionsSetViewModel.class);
+
+        return view("questions/set-of-questions", "questions", questions);
+    }
+
+    @GetMapping("/randomForty")
+    @PreAuthorize("hasRole('ROLE_USER') && !hasRole('ROLE_ROOT')")
+    public ModelAndView fortyRandomQuestions(Principal principal) {
+        QuestionsSetServiceModel randomQuestions;
+        try {
+            randomQuestions = questionService.getFortyRandomQuestionByUser(principal.getName());
         } catch (AllQuestionVisitedException ex) {
             return  view("questions/no-random-questions");
         }
