@@ -9,6 +9,7 @@ public class ResultQuestsViewModel {
     private List<TestAnswerViewModel> correctAnswers;
     private List<FigureViewModel> tables;
     private String scorePoints;
+    private int percentages;
 
     public List<TestAnswerViewModel> getCorrectAnswers() {
         return correctAnswers;
@@ -32,5 +33,13 @@ public class ResultQuestsViewModel {
 
     public void setScorePoints(String scorePoints) {
         this.scorePoints = scorePoints;
+    }
+
+    public int getPercentages() {
+        return percentages;
+    }
+
+    public void setPercentages(int percentages) {
+        this.percentages = percentages;
     }
 }

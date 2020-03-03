@@ -4,8 +4,9 @@
         <th:block th:include="~{fragments/sidenav}"></th:block>
 
         <div class="main container justify-content-center bg-color mt-5" style="min-height: 481px">
-            <h1 class="font-weight-bold pl-5 ml-5" th:text="|Results|"></h1>
-
+            <h1 class="font-weight-bold pl-5 ml-5 inline" th:text="|Results|"></h1>
+            
+            <p style="font-size: xx-large; margin-left: 45%" class="inline text-success font-italic font-weight-bold" th:text="|${questions.percentages}%|"></p>
             <th:block th:each="item, iter : ${questions.correctAnswers}">
                 <div class="container justify-content-center question pb-2">
                     <h5 th:text="|${iter.index + 1}. ${item.question}|"></h5>

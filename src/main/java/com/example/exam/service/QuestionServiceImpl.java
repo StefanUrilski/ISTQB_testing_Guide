@@ -318,11 +318,13 @@ public class QuestionServiceImpl implements QuestionService {
                 .collect(Collectors.toList());
 
         int score = (int) correctAnswers.stream().filter(TestAnswerServiceModel::isValid).count();
+        int percentages = (int) calcPercentage(answers.size(), score);
 
         ResultQuestsServiceModel result = new ResultQuestsServiceModel();
         result.setCorrectAnswers(correctAnswers);
         result.setTables(getAllFiguresAsServiceModel());
         result.setScorePoints(String.format("%s out of %s", score, answers.size()));
+        result.setPercentages(percentages);
         return result;
     }
 

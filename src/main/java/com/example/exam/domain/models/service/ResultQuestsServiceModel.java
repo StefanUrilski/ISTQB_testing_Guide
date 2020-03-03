@@ -9,6 +9,7 @@ public class ResultQuestsServiceModel {
     private List<TestAnswerServiceModel> correctAnswers;
     private List<FigureServiceModel> tables;
     private String scorePoints;
+    private int percentages;
 
     public List<TestAnswerServiceModel> getCorrectAnswers() {
         return correctAnswers;
@@ -32,5 +33,13 @@ public class ResultQuestsServiceModel {
 
     public void setScorePoints(String scorePoints) {
         this.scorePoints = scorePoints;
+    }
+
+    public int getPercentages() {
+        return percentages;
+    }
+
+    public void setPercentages(int percentages) {
+        this.percentages = percentages;
     }
 }

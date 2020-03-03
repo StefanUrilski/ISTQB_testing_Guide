@@ -18,6 +18,10 @@ h5 {
     white-space: pre-wrap;
 }
 
+.inline {
+    display: inline-block;
+}
+
 .question {
     width: 75%;
     margin: 1rem;
