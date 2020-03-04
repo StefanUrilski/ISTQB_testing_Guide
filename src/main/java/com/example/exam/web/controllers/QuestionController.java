@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.HashMap;
 
 @Controller
 @RequestMapping("/questions")
@@ -120,5 +121,11 @@ public class QuestionController extends BaseController {
         questionService.startOver(principal.getName());
 
         return redirect("/questions/all");
+    }
+
+    @GetMapping("/keepAlive")
+    @ResponseBody
+    public Object keepAlive() {
+        return new HashMap<String, String>() {{put("Backend", "alive");}};
     }
 }

@@ -27,4 +27,18 @@
             </button>
         </div>
     </form>
+
+    <script th:inline="javascript">
+        // call backend every 10 min to keep connection alive
+        (function myLoop (i) {
+            setTimeout(function () {
+                fetch('/questions/keepAlive')
+                        .then((response) => response.json())
+                        .then((json) => {
+                           console.log(json);
+                        });
+                if (--i) myLoop(i);
+            }, 6_00_000)
+        })(36);
+    </script>
 </th:block>
